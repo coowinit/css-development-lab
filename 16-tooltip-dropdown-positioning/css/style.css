@@ -1,0 +1,509 @@
+/* =========================================================
+   CSS Development Lab 16
+   Tooltip / Dropdown Positioning
+   ========================================================= */
+
+:root {
+  --page-max: 1200px;
+  --text: #171717;
+  --muted: #686868;
+  --line: #e5e5df;
+  --surface: #ffffff;
+  --soft: #f5f5f1;
+  --dark: #171717;
+  --radius: 20px;
+  --shadow: 0 18px 44px rgba(0, 0, 0, .10);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  line-height: 1.65;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-wrap {
+  width: min(calc(100% - 40px), var(--page-max));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #858585;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+
+.intro {
+  padding: clamp(72px, 10vw, 130px) 0 clamp(58px, 8vw, 90px);
+  background:
+    radial-gradient(circle at 86% 14%, rgba(0,0,0,.05), transparent 27%),
+    linear-gradient(180deg, #fafaf8 0%, #f3f3ef 100%);
+}
+
+.intro-inner {
+  max-width: 1000px;
+}
+
+.intro h1,
+.section-head h2,
+.anchor-copy h2,
+.compare h2,
+.pitfalls-head h2 {
+  margin: 0;
+  line-height: 1.04;
+  letter-spacing: -.045em;
+}
+
+.intro h1 {
+  font-size: clamp(2.8rem, 7vw, 6rem);
+}
+
+.intro-desc {
+  max-width: 840px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+}
+
+/* ---------- Main demo ---------- */
+
+.lab {
+  padding: clamp(80px, 10vw, 130px) 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .78fr);
+  align-items: end;
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.section-head h2,
+.anchor-copy h2,
+.compare h2,
+.pitfalls-head h2 {
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+}
+
+.section-head > p,
+.anchor-copy > p,
+.compare-grid > div:first-child + *,
+.pitfalls-grid p {
+  color: var(--muted);
+}
+
+.section-head > p {
+  margin: 0;
+}
+
+.demo-grid {
+  margin-top: clamp(38px, 6vw, 60px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.demo-card {
+  min-height: 280px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.demo-index {
+  color: #999;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.demo-card h3 {
+  margin: 18px 0 8px;
+  font-size: 1.3rem;
+}
+
+.demo-card > p {
+  margin: 0 0 28px;
+  color: var(--muted);
+}
+
+.plain-button {
+  min-height: 44px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.plain-button img {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Tooltip ---------- */
+
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  z-index: 20;
+  width: max-content;
+  max-width: min(260px, 80vw);
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: #fff;
+  background: #171717;
+  box-shadow: var(--shadow);
+  font-size: .82rem;
+  line-height: 1.4;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 5px);
+  pointer-events: none;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 8px;
+  height: 8px;
+  background: #171717;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.tooltip-wrap:hover .tooltip,
+.tooltip-wrap:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.tooltip-bottom {
+  top: calc(100% + 12px);
+  bottom: auto;
+}
+
+.tooltip-bottom::after {
+  top: auto;
+  bottom: 100%;
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+
+/* ---------- Dropdown ---------- */
+
+.dropdown-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger[aria-expanded="true"] img {
+  transform: rotate(180deg);
+}
+
+.dropdown-trigger img {
+  transition: transform 180ms ease;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 30;
+  min-width: 190px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.dropdown-menu[hidden] {
+  display: none;
+}
+
+.dropdown-menu a {
+  min-height: 40px;
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  color: #444;
+  font-size: .9rem;
+  font-weight: 650;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+  background: var(--soft);
+}
+
+.align-demo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-align .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+/* ---------- Anchor Positioning progressive enhancement ---------- */
+
+.anchor-section {
+  padding: 0 0 clamp(90px, 11vw, 140px);
+}
+
+.anchor-grid {
+  padding: clamp(30px, 6vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(340px, 1.1fr);
+  align-items: center;
+  gap: clamp(38px, 7vw, 90px);
+  border-radius: 28px;
+  background: var(--soft);
+}
+
+.anchor-copy > p {
+  margin: 22px 0 0;
+}
+
+.anchor-demo {
+  position: relative;
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.anchor-button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #171717;
+  font-weight: 760;
+}
+
+.anchor-popover {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 52px);
+  width: min(260px, calc(100% - 30px));
+  padding: 16px;
+  display: grid;
+  gap: 5px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+}
+
+.anchor-popover strong {
+  font-size: .92rem;
+}
+
+.anchor-popover span {
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+/*
+ * Progressive enhancement:
+ * 如果浏览器支持 Anchor Positioning，
+ * 让浮层直接引用按钮锚点，而不是依赖父级绝对定位。
+ */
+@supports (anchor-name: --demo-anchor) and (position-anchor: --demo-anchor) {
+  .anchor-button {
+    anchor-name: --demo-anchor;
+  }
+
+  .anchor-popover {
+    position: absolute;
+    position-anchor: --demo-anchor;
+
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+
+    width: min(260px, calc(100% - 30px));
+    position-area: bottom;
+    margin-top: 12px;
+    transform: none;
+  }
+}
+
+/* ---------- Compare ---------- */
+
+.compare {
+  padding: 0 0 clamp(90px, 11vw, 140px);
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(320px, 1.15fr);
+  align-items: center;
+  gap: clamp(36px, 7vw, 90px);
+}
+
+.decision-list {
+  display: grid;
+  gap: 12px;
+}
+
+.decision-list > div {
+  padding: 18px 20px;
+  display: grid;
+  gap: 4px;
+  border-radius: 14px;
+  background: var(--soft);
+}
+
+.decision-list strong {
+  font-size: .94rem;
+}
+
+.decision-list span {
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+/* ---------- Pitfalls ---------- */
+
+.pitfalls {
+  padding: 0 0 clamp(90px, 12vw, 150px);
+}
+
+.pitfalls-head {
+  max-width: 780px;
+}
+
+.pitfalls-grid {
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pitfalls-grid article {
+  min-height: 220px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.pitfalls-grid span {
+  color: #999;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.pitfalls-grid h3 {
+  margin: auto 0 8px;
+  font-size: 1.15rem;
+}
+
+.pitfalls-grid p {
+  margin: 0;
+  font-size: .9rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .section-head,
+  .anchor-grid,
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pitfalls-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .page-wrap {
+    width: calc(100% - 28px);
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .anchor-grid {
+    padding: 24px;
+  }
+
+  .pitfalls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pitfalls-grid article {
+    min-height: 180px;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

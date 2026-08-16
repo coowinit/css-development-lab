@@ -1,0 +1,287 @@
+/* =========================================================
+   CSS Development Lab 03
+   Responsive Card Grid
+   ========================================================= */
+
+:root {
+  --page-max: 1200px;
+  --text: #171717;
+  --muted: #686868;
+  --line: #e7e7e2;
+  --surface: #ffffff;
+  --soft: #f5f5f1;
+  --radius: 20px;
+  --shadow: 0 18px 42px rgba(0, 0, 0, 0.07);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-wrap {
+  width: min(calc(100% - 40px), var(--page-max));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #818181;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.intro {
+  padding: clamp(70px, 10vw, 130px) 0 clamp(60px, 8vw, 100px);
+  background:
+    radial-gradient(circle at 85% 15%, rgba(0, 0, 0, 0.05), transparent 25%),
+    linear-gradient(180deg, #fafaf8 0%, #f3f3ef 100%);
+}
+
+.intro-inner {
+  max-width: 1000px;
+}
+
+.intro h1,
+.section-head h2,
+.comparison-copy h2 {
+  margin: 0;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.intro h1 {
+  max-width: 850px;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+}
+
+.intro-desc {
+  max-width: 760px;
+  margin: 26px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+}
+
+.lab {
+  padding: clamp(80px, 10vw, 130px) 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+  align-items: end;
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.section-head h2,
+.comparison-copy h2 {
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+}
+
+.section-head > p,
+.comparison-copy > p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------- Core experiment ---------- */
+
+.card-grid {
+  margin-top: clamp(38px, 6vw, 60px);
+  display: grid;
+
+  /*
+   * 核心：
+   * 每列最小 250px，剩余空间由 1fr 平分。
+   * auto-fit 会自动折叠空轨道。
+   */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(16px, 2.4vw, 26px);
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #d4d4cd;
+  box-shadow: var(--shadow);
+}
+
+.card-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #deded8;
+}
+
+.card-media img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.card:hover .card-media img {
+  transform: scale(1.035);
+}
+
+.card-body {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-meta {
+  margin: 0 0 10px;
+  color: #8a8a8a;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+}
+
+.card-desc {
+  margin: 14px 0 22px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.card-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.card-link span {
+  transition: transform 180ms ease;
+}
+
+.card-link:hover span {
+  transform: translateX(4px);
+}
+
+/* ---------- Comparison section ---------- */
+
+.comparison {
+  padding: 0 0 clamp(90px, 12vw, 150px);
+}
+
+.comparison-grid {
+  padding: clamp(30px, 6vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  align-items: center;
+  gap: clamp(30px, 7vw, 90px);
+  border-radius: 28px;
+  background: var(--soft);
+}
+
+.comparison-copy > p {
+  margin-top: 22px;
+}
+
+.code-note {
+  min-width: 0;
+  padding: clamp(22px, 4vw, 34px);
+  overflow-x: auto;
+  border-radius: 18px;
+  background: #181818;
+}
+
+.code-note code {
+  color: #f4f4f4;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(0.82rem, 1.6vw, 1rem);
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px) {
+  .page-wrap {
+    width: calc(100% - 28px);
+  }
+
+  .section-head,
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-grid {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .card-grid {
+    /*
+     * 超窄屏下把最小卡片宽度降到 220px，
+     * 防止出现横向溢出。
+     */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

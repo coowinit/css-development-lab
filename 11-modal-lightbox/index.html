@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 11：Modal 与 Lightbox 实验。">
+  <title>11 · Modal / Lightbox</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 11</p>
+        <h1>Modal / Lightbox</h1>
+        <p class="intro-desc">
+          登录框、询盘表单、产品视频、图片大图都经常需要覆盖在页面最上层。
+          本实验优先使用原生 <code>&lt;dialog&gt;</code>，重点研究 Top Layer、
+          <code>::backdrop</code>、尺寸控制、内部滚动和图片 Lightbox。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap lab-grid">
+        <div class="lab-copy">
+          <p class="eyebrow">CORE DEMO</p>
+          <h2>一个 Dialog，两种常见用途</h2>
+          <p>
+            第一个是标准信息 Modal，第二个是图片 Lightbox。
+            JavaScript 只负责调用 <code>showModal()</code> 与 <code>close()</code>，
+            布局、遮罩、尺寸和响应式全部交给 CSS。
+          </p>
+
+          <div class="tips">
+            <div>
+              <strong>Modal</strong>
+              <span>适合表单、说明、登录、确认操作</span>
+            </div>
+            <div>
+              <strong>Lightbox</strong>
+              <span>适合图片、作品、产品大图、视频</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-stack">
+          <article class="demo-card">
+            <div class="demo-copy">
+              <span>01</span>
+              <h3>内容 Modal</h3>
+              <p>测试标题、正文、按钮、长内容滚动与关闭逻辑。</p>
+            </div>
+            <button class="demo-button" type="button" data-open-dialog="info-dialog">
+              打开 Modal
+            </button>
+          </article>
+
+          <article class="demo-card">
+            <div class="demo-thumb">
+              <img src="images/gallery-01.svg" alt="建筑场景缩略图">
+            </div>
+            <div class="demo-copy">
+              <span>02</span>
+              <h3>图片 Lightbox</h3>
+              <p>点击缩略图后，在原生 Dialog 中查看更大的同一张图片。</p>
+            </div>
+            <button class="demo-button" type="button" data-open-dialog="image-dialog">
+              查看大图
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div class="page-wrap explain-grid">
+        <div>
+          <p class="eyebrow">WHY DIALOG</p>
+          <h2>先理解原生能力，再决定是否自定义</h2>
+          <p>
+            原生 Modal Dialog 会进入浏览器 Top Layer，不需要自己与 Header、
+            Drawer、Tooltip 一层层比拼 <code>z-index</code>。
+          </p>
+        </div>
+
+        <div class="compare-list">
+          <div>
+            <strong>传统自定义 Modal</strong>
+            <span>fixed + z-index + overlay + focus 管理</span>
+          </div>
+          <div>
+            <strong>原生 dialog</strong>
+            <span>showModal() + ::backdrop + Top Layer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="page-wrap">
+        <div class="usage-head">
+          <p class="eyebrow">COMMON USE CASES</p>
+          <h2>高频应用场景</h2>
+        </div>
+
+        <div class="usage-grid">
+          <article><span>01</span><h3>询盘表单</h3><p>B2B 产品页快速提交咨询。</p></article>
+          <article><span>02</span><h3>图片大图</h3><p>Gallery、案例、产品细节查看。</p></article>
+          <article><span>03</span><h3>视频播放</h3><p>点击封面后在浮层中播放。</p></article>
+          <article><span>04</span><h3>确认操作</h3><p>删除、退出、提交等重要操作。</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal-dialog" id="info-dialog" aria-labelledby="info-title">
+    <div class="modal-shell">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">PRODUCT INQUIRY</p>
+          <h2 id="info-title">获取产品资料</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="关闭弹窗">
+          <img src="images/close.svg" alt="">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          这是一个标准内容 Modal 示例。实际项目中可以替换为询盘表单、
+          登录表单、产品说明、视频、确认操作或其他需要用户集中处理的内容。
+        </p>
+
+        <div class="form-demo">
+          <label>
+            <span>姓名</span>
+            <input type="text" placeholder="Your name">
+          </label>
+          <label>
+            <span>邮箱</span>
+            <input type="email" placeholder="name@example.com">
+          </label>
+          <label>
+            <span>需求说明</span>
+            <textarea rows="5" placeholder="Tell us about your project"></textarea>
+          </label>
+        </div>
+
+        <p>
+          Modal 内容如果超过视口高度，不应该让整个 Dialog 跑出屏幕，
+          而应该限制最大高度并让中间内容区域滚动。
+        </p>
+      </div>
+
+      <div class="modal-foot">
+        <button class="secondary-button" type="button" data-close-dialog>取消</button>
+        <button class="primary-button" type="button">提交示例</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox-dialog" id="image-dialog" aria-label="图片大图预览">
+    <div class="lightbox-shell">
+      <button class="lightbox-close" type="button" data-close-dialog aria-label="关闭大图">
+        <img src="images/close-light.svg" alt="">
+      </button>
+      <img class="lightbox-image" src="images/gallery-01.svg" alt="建筑场景大图">
+    </div>
+  </dialog>
+</body>
+</html>

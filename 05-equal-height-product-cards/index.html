@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 05：等高产品卡片布局实验。">
+  <title>05 · 等高产品卡片</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 05</p>
+        <h1>等高产品卡片</h1>
+        <p class="intro-desc">
+          真实产品列表中，标题、描述、标签数量往往都不同。本实验重点解决：
+          卡片整体等高、按钮底部对齐、内容区域自然伸缩，同时保持响应式。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">REAL-WORLD PROBLEM</p>
+            <h2>内容不一样，底部仍然要整齐</h2>
+          </div>
+          <p>
+            外层 Grid 负责卡片列数，卡片内部使用纵向 Flex。
+            关键不是给每张卡片写固定高度，而是让内容区自然占据剩余空间。
+          </p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-media">
+              <img src="images/product-01.svg" alt="户外地板产品占位图">
+            </div>
+            <div class="product-body">
+              <p class="product-category">DECKING</p>
+              <h3>经典户外地板</h3>
+              <p class="product-desc">
+                简短描述，用来测试内容较少时按钮是否仍然和其他卡片保持底部对齐。
+              </p>
+              <ul class="product-tags">
+                <li>耐候</li>
+                <li>低维护</li>
+              </ul>
+              <a class="product-link" href="#product-1">查看产品 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-media">
+              <img src="images/product-02.svg" alt="墙板产品占位图">
+            </div>
+            <div class="product-body">
+              <p class="product-category">CLADDING</p>
+              <h3>现代建筑外墙与室内墙板系统</h3>
+              <p class="product-desc">
+                这一张卡片故意使用更长的标题和更长的说明文字。
+                如果布局方式不合理，它通常会把底部按钮整体向下推，导致一排按钮无法对齐。
+              </p>
+              <ul class="product-tags">
+                <li>建筑立面</li>
+                <li>室内墙面</li>
+                <li>多规格</li>
+              </ul>
+              <a class="product-link" href="#product-2">查看产品 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-media">
+              <img src="images/product-03.svg" alt="围栏产品占位图">
+            </div>
+            <div class="product-body">
+              <p class="product-category">FENCING</p>
+              <h3>模块化围栏</h3>
+              <p class="product-desc">
+                中等长度内容，用来观察不同文字量下的卡片高度分配。
+              </p>
+              <ul class="product-tags">
+                <li>隐私保护</li>
+                <li>快速安装</li>
+                <li>户外应用</li>
+                <li>模块组合</li>
+              </ul>
+              <a class="product-link" href="#product-3">查看产品 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-media">
+              <img src="images/product-04.svg" alt="格栅产品占位图">
+            </div>
+            <div class="product-body">
+              <p class="product-category">SLATTED WALL</p>
+              <h3>装饰格栅系统</h3>
+              <p class="product-desc">
+                内容长度再次缩短，但按钮位置仍然应该和同一行的其他卡片保持一致。
+              </p>
+              <ul class="product-tags">
+                <li>装饰性</li>
+              </ul>
+              <a class="product-link" href="#product-4">查看产品 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div class="page-wrap explain-grid">
+        <div class="explain-copy">
+          <p class="eyebrow">CORE CSS</p>
+          <h2>真正起作用的是内部 Flex</h2>
+          <p>
+            `product-body` 占满剩余高度，按钮通过 `margin-top: auto`
+            被推到底部。这样无需 JavaScript 测量，也不用人为限制标题或描述高度。
+          </p>
+        </div>
+
+        <div class="code-card" aria-label="核心 CSS 示例">
+<pre><code>.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-link {
+  margin-top: auto;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="page-wrap">
+        <div class="compare-head">
+          <p class="eyebrow">PRACTICAL CHOICE</p>
+          <h2>Flex、Grid、Subgrid 怎么选？</h2>
+        </div>
+
+        <div class="compare-grid">
+          <article>
+            <span>01</span>
+            <h3>Flex</h3>
+            <p>最适合单张卡片内部纵向分配空间，按钮底部对齐简单、稳定、易维护。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Grid</h3>
+            <p>最适合外层卡片列表，负责列数、间距和整体响应式。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Subgrid</h3>
+            <p>适合需要跨多张卡片让标题、描述、按钮严格按统一轨道对齐的更复杂场景。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

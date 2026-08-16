@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 17：Container Queries 容器查询实验。">
+  <title>17 · Container Queries 容器查询</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 17</p>
+        <h1>Container Queries 容器查询</h1>
+        <p class="intro-desc">
+          Media Query 关注浏览器宽度，Container Query 关注组件自己所在容器的宽度。
+          本实验使用同一个产品卡片组件，在宽容器、中等容器和窄侧栏中自动改变布局。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CORE DEMO</p>
+            <h2>同一个组件，三种容器</h2>
+          </div>
+          <p>
+            下方三个区域使用完全相同的 Product Card HTML。
+            不同之处只有父容器宽度，组件会根据容器宽度自动变成横向卡片、紧凑卡片或纵向卡片。
+          </p>
+        </div>
+
+        <div class="container-demo wide-demo">
+          <p class="container-label">宽容器 · MAIN CONTENT</p>
+          <div class="card-container">
+            <article class="product-card">
+              <div class="product-media">
+                <img src="images/product-01.svg" alt="产品占位图">
+              </div>
+              <div class="product-body">
+                <p class="product-meta">COMPOSITE DECKING</p>
+                <h3>Professional Outdoor Decking</h3>
+                <p class="product-desc">
+                  适合庭院、露台与商业景观的户外复合地板系统，
+                  支持多种颜色和表面纹理。
+                </p>
+                <div class="product-actions">
+                  <a href="#details">查看详情</a>
+                  <a href="#inquiry" class="primary">获取报价</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="middle-grid">
+          <div class="container-demo medium-demo">
+            <p class="container-label">中等容器 · CONTENT COLUMN</p>
+            <div class="card-container">
+              <article class="product-card">
+                <div class="product-media">
+                  <img src="images/product-02.svg" alt="产品占位图">
+                </div>
+                <div class="product-body">
+                  <p class="product-meta">WALL CLADDING</p>
+                  <h3>Architectural Wall Cladding</h3>
+                  <p class="product-desc">
+                    适合建筑立面和室内装饰的墙板系统。
+                  </p>
+                  <div class="product-actions">
+                    <a href="#details">查看详情</a>
+                    <a href="#inquiry" class="primary">获取报价</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <aside class="container-demo narrow-demo">
+            <p class="container-label">窄容器 · SIDEBAR</p>
+            <div class="card-container">
+              <article class="product-card">
+                <div class="product-media">
+                  <img src="images/product-03.svg" alt="产品占位图">
+                </div>
+                <div class="product-body">
+                  <p class="product-meta">FENCING</p>
+                  <h3>Privacy Fence System</h3>
+                  <p class="product-desc">
+                    适合住宅隐私围栏和花园分隔。
+                  </p>
+                  <div class="product-actions">
+                    <a href="#details">查看详情</a>
+                    <a href="#inquiry" class="primary">获取报价</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="page-wrap compare-grid">
+        <div class="compare-copy">
+          <p class="eyebrow">MEDIA VS CONTAINER</p>
+          <h2>响应式不只看浏览器宽度</h2>
+          <p>
+            当同一个组件可能出现在主栏、侧栏、Drawer、Modal 或 CMS 不同区域时，
+            只靠 Media Query 很难判断组件实际拥有多少空间。
+          </p>
+        </div>
+
+        <div class="decision-list">
+          <div>
+            <strong>Media Query</strong>
+            <span>页面级布局、全局导航、视口变化</span>
+          </div>
+          <div>
+            <strong>Container Query</strong>
+            <span>组件级布局、Card、Widget、可复用模块</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-section">
+      <div class="page-wrap code-grid">
+        <div>
+          <p class="eyebrow">CORE CSS</p>
+          <h2>先定义容器，再查询容器</h2>
+        </div>
+
+        <div class="code-card">
+<pre><code>.card-container {
+  container-type: inline-size;
+}
+
+@container (min-width: 620px) {
+  .product-card {
+    grid-template-columns:
+      minmax(220px, 38%)
+      minmax(0, 1fr);
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <div class="page-wrap">
+        <div class="use-head">
+          <p class="eyebrow">BEST USE CASES</p>
+          <h2>最适合组件化项目的现代 CSS</h2>
+        </div>
+
+        <div class="use-grid">
+          <article>
+            <span>01</span>
+            <h3>产品卡片</h3>
+            <p>主列表、侧栏推荐、Drawer 中都能复用同一个组件。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Widget</h3>
+            <p>CMS 区块、WordPress 小工具、Dashboard 模块。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Modal / Drawer</h3>
+            <p>同一个组件放进弹窗后，根据实际空间自动调整。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>组件库</h3>
+            <p>组件不用知道整个页面宽度，只关心自己拥有的空间。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

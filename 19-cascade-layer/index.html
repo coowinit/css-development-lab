@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 19：Cascade 与 @layer 层叠管理实验。">
+  <title>19 · Cascade & @layer 层叠管理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 19</p>
+        <h1>Cascade &amp; @layer</h1>
+        <p class="intro-desc">
+          CSS 大项目最容易失控的地方，不是 Grid 或 Flex，而是“到底哪条规则生效”。
+          本实验用按钮、卡片和工具类，理解层叠顺序、Specificity、源码顺序与 @layer。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">REAL PROBLEM</p>
+            <h2>选择器战争是怎么开始的</h2>
+          </div>
+          <p>
+            当组件样式、页面样式、工具类互相覆盖时，很多项目会不断增加选择器权重，
+            最后出现 `.page .section .card .button` 甚至大量 `!important`。
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card">
+            <span>01</span>
+            <h3>源码顺序</h3>
+            <p>权重相同的规则，通常后写的会覆盖前面的。</p>
+            <pre><code>.button { color: black; }
+.button { color: white; }</code></pre>
+          </article>
+
+          <article class="problem-card">
+            <span>02</span>
+            <h3>Specificity</h3>
+            <p>更具体的选择器，可能压过后面更简单的规则。</p>
+            <pre><code>.card .button { ... }
+.button { ... }</code></pre>
+          </article>
+
+          <article class="problem-card">
+            <span>03</span>
+            <h3>!important</h3>
+            <p>短期能解决问题，长期很容易继续升级冲突。</p>
+            <pre><code>.button {
+  color: white !important;
+}</code></pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="layer-demo">
+      <div class="page-wrap layer-grid">
+        <div class="layer-copy">
+          <p class="eyebrow">LAYER ORDER</p>
+          <h2>先把优先级顺序写在 CSS 顶部</h2>
+          <p>
+            本实验把样式分成 reset、base、components、utilities 四层。
+            对普通声明来说，后面的 Layer 优先级更高。
+          </p>
+        </div>
+
+        <div class="layer-stack" aria-label="CSS Layer 优先级">
+          <div class="layer-item layer-utility">
+            <span>04</span>
+            <strong>utilities</strong>
+            <small>最高的普通 Layer 优先级</small>
+          </div>
+          <div class="layer-item layer-component">
+            <span>03</span>
+            <strong>components</strong>
+            <small>Button / Card / Navigation</small>
+          </div>
+          <div class="layer-item layer-base">
+            <span>02</span>
+            <strong>base</strong>
+            <small>body / headings / links</small>
+          </div>
+          <div class="layer-item layer-reset">
+            <span>01</span>
+            <strong>reset</strong>
+            <small>最低的普通 Layer 优先级</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="button-demo">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">PRACTICAL DEMO</p>
+            <h2>组件样式 + 工具类</h2>
+          </div>
+          <p>
+            三个按钮都使用同一个 `.button` 组件。工具类放在 utilities Layer，
+            可以用简单类名覆盖组件的一部分，而不需要写更长的选择器。
+          </p>
+        </div>
+
+        <div class="button-row">
+          <a href="#default" class="button">默认按钮</a>
+          <a href="#quiet" class="button u-quiet">工具类：弱化</a>
+          <a href="#wide" class="button u-wide">工具类：加宽</a>
+        </div>
+
+        <div class="code-card">
+<pre><code>@layer reset, base, components, utilities;
+
+@layer components {
+  .button {
+    background: #171717;
+    color: white;
+  }
+}
+
+@layer utilities {
+  .u-quiet {
+    background: #f1f1ed;
+    color: #171717;
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="specificity">
+      <div class="page-wrap specificity-grid">
+        <div>
+          <p class="eyebrow">SPECIFICITY</p>
+          <h2>Layer 不能替代对权重的理解</h2>
+          <p>
+            `@layer` 可以管理“不同来源模块之间”的优先级，但同一个 Layer 内部，
+            仍然要遵守 Specificity 和源码顺序。
+          </p>
+        </div>
+
+        <div class="score-list">
+          <div><code>p</code><span>元素选择器</span><strong>低</strong></div>
+          <div><code>.button</code><span>类选择器</span><strong>中</strong></div>
+          <div><code>#hero</code><span>ID 选择器</span><strong>高</strong></div>
+          <div><code>style=""</code><span>内联样式</span><strong>更高</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture">
+      <div class="page-wrap">
+        <div class="architecture-head">
+          <p class="eyebrow">PROJECT ARCHITECTURE</p>
+          <h2>适合长期维护的分层方式</h2>
+        </div>
+
+        <div class="architecture-grid">
+          <article>
+            <span>reset</span>
+            <h3>浏览器基础重置</h3>
+            <p>box-sizing、margin 清理、图片默认行为。</p>
+          </article>
+          <article>
+            <span>base</span>
+            <h3>全局基础样式</h3>
+            <p>body、标题、链接、排版和 Design Tokens。</p>
+          </article>
+          <article>
+            <span>components</span>
+            <h3>可复用组件</h3>
+            <p>Button、Card、Tabs、Accordion、Navigation。</p>
+          </article>
+          <article>
+            <span>utilities</span>
+            <h3>小型覆盖工具</h3>
+            <p>隐藏、对齐、间距、特殊状态等小范围调整。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="warning">
+      <div class="page-wrap warning-grid">
+        <div>
+          <p class="eyebrow">IMPORTANT DETAIL</p>
+          <h2>不要把 @layer 当成“万能覆盖器”</h2>
+        </div>
+
+        <div class="warning-list">
+          <p>
+            <strong>①</strong>
+            未放进任何 Layer 的普通样式，会比 Layer 内普通样式优先。
+          </p>
+          <p>
+            <strong>②</strong>
+            <code>!important</code> 的 Layer 优先顺序与普通声明不同，不建议拿它做日常覆盖策略。
+          </p>
+          <p>
+            <strong>③</strong>
+            最好的目标仍然是：选择器简单、职责明确、覆盖关系可以预测。
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

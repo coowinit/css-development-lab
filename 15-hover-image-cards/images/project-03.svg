@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" role="img" aria-labelledby="t d">
+  <title id="t">项目占位图 3</title>
+  <desc id="d">用于 Hover 图片卡片实验的无文字抽象场景</desc>
+  <rect width="1000" height="750" fill="#d9d2cf"/>
+  <rect x="122" y="126" width="690" height="470" rx="44" fill="#f0ebe8"/>
+  <rect x="240" y="194" width="500" height="400" rx="34" fill="#b3a69f"/>
+  <circle cx="724" cy="215" r="100" fill="#f0ebe8"/>
+  <path d="M40 670 L290 380 L470 535 L650 310 L960 670 Z" fill="#b3a69f" opacity=".76"/>
+</svg>

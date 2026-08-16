@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" role="img" aria-labelledby="title desc">
+  <title id="title">图文模块占位图 2</title>
+  <desc id="desc">用于左右图文交错布局实验的无文字抽象 SVG</desc>
+  <rect width="1000" height="750" fill="#d2d8d6"/>
+  <rect x="120" y="105" width="720" height="470" rx="42" fill="#eef1ef"/>
+  <rect x="234" y="186" width="500" height="420" rx="34" fill="#a6b3af"/>
+  <circle cx="716" cy="202" r="92" fill="#eef1ef"/>
+  <path d="M60 650 L300 370 L470 520 L650 300 L940 650 Z" fill="#a6b3af" opacity=".72"/>
+</svg>

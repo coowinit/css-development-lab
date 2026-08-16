@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="t d">
+<title id="t">产品场景占位图</title>
+<desc id="d">用于主题实验的无文字抽象产品场景</desc>
+<rect width="900" height="700" fill="#cfd3cf"/>
+<rect x="80" y="80" width="650" height="450" rx="46" fill="#e9ece8"/>
+<rect x="190" y="165" width="480" height="370" rx="34" fill="#9fa9a2"/>
+<circle cx="725" cy="155" r="80" fill="#eff1ee"/>
+<path d="M30 620 L250 365 L430 505 L610 295 L870 620 Z" fill="#8f9992" opacity=".72"/>
+</svg>

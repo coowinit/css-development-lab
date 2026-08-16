@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 08：响应式表格实验。">
+  <title>08 · 响应式表格</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 08</p>
+        <h1>响应式表格</h1>
+        <p class="intro-desc">
+          表格最难的不是“画边框”，而是内容一多、屏幕一窄后如何保持可读性。
+          本实验重点研究横向滚动、最小宽度、Sticky 表头、Sticky 首列与移动端策略。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">PRIMARY SOLUTION</p>
+            <h2>先保留表格语义，再处理溢出</h2>
+          </div>
+          <p>
+            对产品规格、价格、参数、后台数据这类真正的二维数据，
+            首选方案通常不是把表格拆掉，而是让外层容器负责横向滚动。
+          </p>
+        </div>
+
+        <div class="table-shell" tabindex="0" aria-label="可横向滚动的产品规格表">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th scope="col">型号</th>
+                <th scope="col">尺寸</th>
+                <th scope="col">表面处理</th>
+                <th scope="col">颜色</th>
+                <th scope="col">适用场景</th>
+                <th scope="col">质保</th>
+                <th scope="col">状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">CW-140</th>
+                <td>140 × 23 mm</td>
+                <td>木纹压花</td>
+                <td>Teak / Walnut / Grey</td>
+                <td>庭院、露台、步道</td>
+                <td>15 年</td>
+                <td><span class="status">常规</span></td>
+              </tr>
+              <tr>
+                <th scope="row">CW-150 Pro</th>
+                <td>150 × 25 mm</td>
+                <td>深压纹 + 拉丝</td>
+                <td>Charcoal / Oak / Sand</td>
+                <td>酒店、商业景观、泳池周边</td>
+                <td>20 年</td>
+                <td><span class="status">推荐</span></td>
+              </tr>
+              <tr>
+                <th scope="row">CL-219</th>
+                <td>219 × 26 mm</td>
+                <td>细木纹</td>
+                <td>Black / Cedar / Coffee</td>
+                <td>建筑外墙、立面改造</td>
+                <td>15 年</td>
+                <td><span class="status">常规</span></td>
+              </tr>
+              <tr>
+                <th scope="row">FN-90</th>
+                <td>90 × 40 mm</td>
+                <td>哑光</td>
+                <td>Brown / Dark Grey</td>
+                <td>住宅围栏、花园隔断</td>
+                <td>10 年</td>
+                <td><span class="status">定制</span></td>
+              </tr>
+              <tr>
+                <th scope="row">SL-60</th>
+                <td>60 × 30 mm</td>
+                <td>木纹膜压</td>
+                <td>Natural Oak / Walnut</td>
+                <td>室内背景墙、格栅吊顶</td>
+                <td>10 年</td>
+                <td><span class="status">新品</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="table-hint">手机端可左右滑动表格 →</p>
+      </div>
+    </section>
+
+    <section class="sticky-demo">
+      <div class="page-wrap">
+        <div class="sticky-head">
+          <p class="eyebrow">STICKY HEADER + FIRST COLUMN</p>
+          <h2>长表格中的定位辅助</h2>
+          <p>
+            当表格同时很宽、很长时，可以固定表头与第一列，让用户在滚动时始终知道当前行和当前字段。
+          </p>
+        </div>
+
+        <div class="table-shell tall" tabindex="0" aria-label="带固定表头和首列的数据表">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">产品</th>
+                <th scope="col">Jan</th>
+                <th scope="col">Feb</th>
+                <th scope="col">Mar</th>
+                <th scope="col">Apr</th>
+                <th scope="col">May</th>
+                <th scope="col">Jun</th>
+                <th scope="col">Jul</th>
+                <th scope="col">Aug</th>
+                <th scope="col">Sep</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Decking A</th><td>128</td><td>146</td><td>139</td><td>158</td><td>172</td><td>181</td><td>194</td><td>205</td><td>219</td></tr>
+              <tr><th scope="row">Decking B</th><td>92</td><td>104</td><td>118</td><td>121</td><td>130</td><td>142</td><td>149</td><td>161</td><td>170</td></tr>
+              <tr><th scope="row">Cladding A</th><td>75</td><td>82</td><td>90</td><td>96</td><td>101</td><td>110</td><td>116</td><td>128</td><td>136</td></tr>
+              <tr><th scope="row">Cladding B</th><td>66</td><td>73</td><td>80</td><td>84</td><td>91</td><td>98</td><td>107</td><td>111</td><td>120</td></tr>
+              <tr><th scope="row">Fencing A</th><td>54</td><td>61</td><td>65</td><td>70</td><td>76</td><td>80</td><td>88</td><td>95</td><td>99</td></tr>
+              <tr><th scope="row">Fencing B</th><td>48</td><td>52</td><td>57</td><td>63</td><td>69</td><td>75</td><td>82</td><td>87</td><td>94</td></tr>
+              <tr><th scope="row">Slat Wall</th><td>43</td><td>48</td><td>52</td><td>56</td><td>60</td><td>67</td><td>71</td><td>77</td><td>82</td></tr>
+              <tr><th scope="row">Accessories</th><td>118</td><td>126</td><td>132</td><td>140</td><td>147</td><td>155</td><td>164</td><td>172</td><td>181</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="strategy">
+      <div class="page-wrap strategy-grid">
+        <div class="strategy-copy">
+          <p class="eyebrow">MOBILE STRATEGY</p>
+          <h2>不是所有表格都应该卡片化</h2>
+          <p>
+            如果用户需要横向比较多列数据，保留表格并允许横向滚动通常更合理。
+            只有当每一行本质上是一条独立记录时，移动端卡片化才更自然。
+          </p>
+        </div>
+
+        <div class="decision-list">
+          <div>
+            <strong>需要横向比较</strong>
+            <span>保留 Table + 横向滚动</span>
+          </div>
+          <div>
+            <strong>列很多且数据密集</strong>
+            <span>Sticky Header / First Column</span>
+          </div>
+          <div>
+            <strong>每行是一条独立记录</strong>
+            <span>可以考虑手机端卡片化</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-cards">
+      <div class="page-wrap">
+        <div class="mini-head">
+          <p class="eyebrow">OPTIONAL CARD MODE</p>
+          <h2>适合“记录型数据”的移动端表达</h2>
+        </div>
+
+        <div class="record-grid">
+          <article class="record-card">
+            <h3>CW-140</h3>
+            <dl>
+              <div><dt>尺寸</dt><dd>140 × 23 mm</dd></div>
+              <div><dt>颜色</dt><dd>Teak / Walnut / Grey</dd></div>
+              <div><dt>场景</dt><dd>庭院、露台、步道</dd></div>
+              <div><dt>质保</dt><dd>15 年</dd></div>
+            </dl>
+          </article>
+
+          <article class="record-card">
+            <h3>CW-150 Pro</h3>
+            <dl>
+              <div><dt>尺寸</dt><dd>150 × 25 mm</dd></div>
+              <div><dt>颜色</dt><dd>Charcoal / Oak / Sand</dd></div>
+              <div><dt>场景</dt><dd>酒店、商业景观</dd></div>
+              <div><dt>质保</dt><dd>20 年</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

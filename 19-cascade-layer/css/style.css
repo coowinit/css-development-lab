@@ -1,0 +1,504 @@
+/* =========================================================
+   CSS Development Lab 19
+   Cascade + @layer
+   ========================================================= */
+
+/*
+ * 先声明 Layer 顺序。
+ * 对普通声明而言，越靠后的 Layer 优先级越高。
+ */
+@layer reset, base, components, utilities;
+
+/* =========================================================
+   1. RESET
+   ========================================================= */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  p,
+  pre {
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+
+@layer base {
+  :root {
+    --page-max: 1200px;
+    --text: #171717;
+    --muted: #686868;
+    --line: #e5e5df;
+    --surface: #ffffff;
+    --soft: #f5f5f1;
+    --dark: #171717;
+    --radius: 20px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    color: var(--text);
+    background: var(--surface);
+    font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    line-height: 1.65;
+  }
+
+  code,
+  pre {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+
+  .page-wrap {
+    width: min(calc(100% - 40px), var(--page-max));
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+    color: #858585;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+  }
+
+  :focus-visible {
+    outline: 2px solid #171717;
+    outline-offset: 3px;
+  }
+}
+
+/* =========================================================
+   3. COMPONENTS
+   ========================================================= */
+
+@layer components {
+  .intro {
+    padding: clamp(72px, 10vw, 130px) 0 clamp(58px, 8vw, 90px);
+    background:
+      radial-gradient(circle at 86% 14%, rgba(0,0,0,.05), transparent 27%),
+      linear-gradient(180deg, #fafaf8 0%, #f3f3ef 100%);
+  }
+
+  .intro-inner {
+    max-width: 1000px;
+  }
+
+  .intro h1,
+  .section-head h2,
+  .layer-copy h2,
+  .specificity h2,
+  .architecture-head h2,
+  .warning h2 {
+    line-height: 1.04;
+    letter-spacing: -.045em;
+  }
+
+  .intro h1 {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+  }
+
+  .intro-desc {
+    max-width: 840px;
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: clamp(1rem, 1.7vw, 1.18rem);
+  }
+
+  .lab,
+  .button-demo {
+    padding: clamp(80px, 10vw, 130px) 0;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .78fr);
+    align-items: end;
+    gap: clamp(28px, 6vw, 80px);
+  }
+
+  .section-head h2,
+  .layer-copy h2,
+  .specificity h2,
+  .architecture-head h2,
+  .warning h2 {
+    font-size: clamp(2rem, 4.5vw, 4.5rem);
+  }
+
+  .section-head > p,
+  .layer-copy > p,
+  .specificity-grid > div:first-child > p:last-child {
+    color: var(--muted);
+  }
+
+  .problem-grid {
+    margin-top: clamp(38px, 6vw, 60px);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .problem-card {
+    min-width: 0;
+    min-height: 300px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .problem-card > span {
+    color: #999;
+    font-size: .78rem;
+    font-weight: 800;
+  }
+
+  .problem-card h3 {
+    margin-top: 22px;
+    font-size: 1.25rem;
+  }
+
+  .problem-card p {
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .problem-card pre {
+    margin-top: auto;
+    padding: 16px;
+    overflow-x: auto;
+    border-radius: 12px;
+    color: #f2f2f2;
+    background: #181818;
+    font-size: .78rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- Layer demo ---------- */
+
+  .layer-demo {
+    padding-bottom: clamp(90px, 11vw, 140px);
+  }
+
+  .layer-grid {
+    padding: clamp(30px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(320px, 1.15fr);
+    align-items: center;
+    gap: clamp(36px, 7vw, 90px);
+    border-radius: 28px;
+    background: var(--soft);
+  }
+
+  .layer-copy > p {
+    margin-top: 22px;
+  }
+
+  .layer-stack {
+    display: grid;
+    gap: 10px;
+  }
+
+  .layer-item {
+    min-height: 74px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 36px 120px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #fff;
+  }
+
+  .layer-item span {
+    color: #999;
+    font-size: .76rem;
+    font-weight: 800;
+  }
+
+  .layer-item strong {
+    font-size: .94rem;
+  }
+
+  .layer-item small {
+    color: var(--muted);
+  }
+
+  /* ---------- Practical buttons ---------- */
+
+  .button-row {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .button {
+    min-height: 46px;
+    padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--dark);
+    border-radius: 999px;
+    color: #fff;
+    background: var(--dark);
+    font-size: .9rem;
+    font-weight: 760;
+  }
+
+  .code-card {
+    margin-top: 34px;
+    min-width: 0;
+    overflow-x: auto;
+    border-radius: 18px;
+    background: #181818;
+  }
+
+  .code-card pre {
+    padding: clamp(22px, 4vw, 34px);
+  }
+
+  .code-card code {
+    color: #f2f2f2;
+    font-size: clamp(.8rem, 1.4vw, .94rem);
+    line-height: 1.75;
+  }
+
+  /* ---------- Specificity ---------- */
+
+  .specificity {
+    padding-bottom: clamp(90px, 11vw, 140px);
+  }
+
+  .specificity-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(320px, 1.15fr);
+    align-items: center;
+    gap: clamp(36px, 7vw, 90px);
+  }
+
+  .specificity-grid > div:first-child > p:last-child {
+    margin-top: 22px;
+  }
+
+  .score-list {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .score-list > div {
+    padding: 16px 0;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) 58px;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .score-list code {
+    font-weight: 750;
+  }
+
+  .score-list span {
+    color: var(--muted);
+  }
+
+  .score-list strong {
+    text-align: right;
+    font-size: .84rem;
+  }
+
+  /* ---------- Architecture ---------- */
+
+  .architecture {
+    padding-bottom: clamp(90px, 11vw, 140px);
+  }
+
+  .architecture-head {
+    max-width: 780px;
+  }
+
+  .architecture-grid {
+    margin-top: 38px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .architecture-grid article {
+    min-height: 220px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .architecture-grid span {
+    align-self: flex-start;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: var(--soft);
+    font-size: .74rem;
+    font-weight: 800;
+  }
+
+  .architecture-grid h3 {
+    margin-top: auto;
+    font-size: 1.12rem;
+  }
+
+  .architecture-grid p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  /* ---------- Warning ---------- */
+
+  .warning {
+    padding-bottom: clamp(90px, 12vw, 150px);
+  }
+
+  .warning-grid {
+    padding: clamp(30px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(360px, 1.2fr);
+    align-items: center;
+    gap: clamp(36px, 7vw, 90px);
+    border-radius: 28px;
+    background: var(--soft);
+  }
+
+  .warning-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .warning-list p {
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--muted);
+  }
+
+  .warning-list strong {
+    color: var(--text);
+  }
+
+  @media (max-width: 900px) {
+    .section-head,
+    .layer-grid,
+    .specificity-grid,
+    .warning-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .problem-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .architecture-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .page-wrap {
+      width: calc(100% - 28px);
+    }
+
+    .layer-grid,
+    .warning-grid {
+      padding: 24px;
+    }
+
+    .layer-item {
+      grid-template-columns: 30px 100px minmax(0, 1fr);
+    }
+
+    .layer-item small {
+      font-size: .78rem;
+    }
+
+    .button-row {
+      display: grid;
+    }
+
+    .button {
+      width: 100%;
+    }
+
+    .architecture-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .score-list > div {
+      grid-template-columns: 92px minmax(0, 1fr) 48px;
+    }
+  }
+}
+
+/* =========================================================
+   4. UTILITIES
+   ========================================================= */
+
+@layer utilities {
+  /*
+   * 这些类选择器并不比 .button 更“具体”，
+   * 但 utilities Layer 在 components 之后，
+   * 所以普通声明可以自然覆盖组件层。
+   */
+
+  .u-quiet {
+    border-color: var(--line);
+    color: var(--text);
+    background: var(--soft);
+  }
+
+  .u-wide {
+    padding-inline: 34px;
+  }
+}
+
+/* =========================================================
+   Important note
+   ========================================================= */
+
+/*
+ * 未放入 Layer 的普通声明会优先于 Layer 内的普通声明。
+ * 所以大型项目一旦决定使用 @layer，建议建立清晰规则，
+ * 不要随意在 Layer 外继续堆普通组件覆盖样式。
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

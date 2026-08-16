@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 16：Tooltip / Dropdown 定位实验。">
+  <title>16 · Tooltip / Dropdown 定位</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 16</p>
+        <h1>Tooltip / Dropdown 定位</h1>
+        <p class="intro-desc">
+          Tooltip、Dropdown、Context Menu 的共同难点不是“显示出来”，
+          而是“应该相对谁定位、如何跟随触发元素、如何避免坐标计算越来越复杂”。
+          本实验先掌握传统可靠方案，再了解 Anchor Positioning 的渐进增强思路。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">TRADITIONAL PATTERN</p>
+            <h2>先把 relative + absolute 用对</h2>
+          </div>
+          <p>
+            对大多数简单 Tooltip / Dropdown，最稳定的方案仍然是：
+            触发器外层建立定位上下文，浮层使用绝对定位。
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span class="demo-index">01</span>
+            <h3>Tooltip</h3>
+            <p>鼠标悬停或键盘聚焦按钮时显示简短提示。</p>
+
+            <div class="tooltip-wrap">
+              <button class="plain-button" type="button" aria-describedby="tip-1">
+                查看提示
+              </button>
+              <span class="tooltip" id="tip-1" role="tooltip">
+                这是一个纯 CSS Tooltip
+              </span>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">02</span>
+            <h3>Dropdown</h3>
+            <p>点击按钮后显示操作菜单，定位仍然由 CSS 完成。</p>
+
+            <div class="dropdown-wrap" data-dropdown>
+              <button class="plain-button dropdown-trigger"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="dropdown-menu-1"
+                      data-dropdown-trigger>
+                更多操作
+                <img src="images/chevron.svg" alt="" aria-hidden="true">
+              </button>
+
+              <div class="dropdown-menu"
+                   id="dropdown-menu-1"
+                   data-dropdown-menu
+                   hidden>
+                <a href="#view">查看详情</a>
+                <a href="#download">下载资料</a>
+                <a href="#share">分享链接</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">03</span>
+            <h3>Right-aligned Menu</h3>
+            <p>按钮靠右时，菜单可以通过 right: 0 与触发器右边缘对齐。</p>
+
+            <div class="align-demo">
+              <div class="dropdown-wrap right-align" data-dropdown>
+                <button class="plain-button dropdown-trigger"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="dropdown-menu-2"
+                        data-dropdown-trigger>
+                  右侧菜单
+                  <img src="images/chevron.svg" alt="" aria-hidden="true">
+                </button>
+
+                <div class="dropdown-menu"
+                     id="dropdown-menu-2"
+                     data-dropdown-menu
+                     hidden>
+                  <a href="#edit">编辑</a>
+                  <a href="#duplicate">复制</a>
+                  <a href="#archive">归档</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">04</span>
+            <h3>Arrow</h3>
+            <p>Tooltip 箭头可以直接使用伪元素，不需要额外图片。</p>
+
+            <div class="tooltip-wrap">
+              <button class="plain-button" type="button" aria-describedby="tip-2">
+                带箭头提示
+              </button>
+              <span class="tooltip tooltip-bottom" id="tip-2" role="tooltip">
+                箭头来自 ::after
+              </span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="anchor-section">
+      <div class="page-wrap anchor-grid">
+        <div class="anchor-copy">
+          <p class="eyebrow">PROGRESSIVE ENHANCEMENT</p>
+          <h2>Anchor Positioning：让浮层直接“跟着锚点走”</h2>
+          <p>
+            传统方案依赖“浮层必须位于定位父级内部”。Anchor Positioning 的思路是：
+            先给触发元素定义锚点，再让浮层直接引用这个锚点进行定位。
+          </p>
+          <p>
+            这一章不把它作为唯一方案，而是作为现代 CSS 的增强能力：
+            支持时使用，不支持时仍保留传统定位结构。
+          </p>
+        </div>
+
+        <div class="anchor-demo">
+          <button class="anchor-button" type="button" id="anchor-trigger">
+            Anchor Trigger
+          </button>
+
+          <div class="anchor-popover">
+            <strong>Anchor Popover</strong>
+            <span>支持 Anchor Positioning 时，这个浮层会直接依赖锚点定位。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="page-wrap compare-grid">
+        <div>
+          <p class="eyebrow">HOW TO CHOOSE</p>
+          <h2>简单问题，不要过度工程化</h2>
+        </div>
+
+        <div class="decision-list">
+          <div>
+            <strong>简单 Tooltip / Dropdown</strong>
+            <span>relative + absolute 足够</span>
+          </div>
+          <div>
+            <strong>浮层需要脱离原 DOM 层级</strong>
+            <span>Anchor Positioning 更有价值</span>
+          </div>
+          <div>
+            <strong>复杂碰撞检测 / 智能翻转</strong>
+            <span>可能仍需要专门 JS 定位方案</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pitfalls">
+      <div class="page-wrap">
+        <div class="pitfalls-head">
+          <p class="eyebrow">COMMON PITFALLS</p>
+          <h2>四个高频问题</h2>
+        </div>
+
+        <div class="pitfalls-grid">
+          <article>
+            <span>01</span>
+            <h3>定位父级错误</h3>
+            <p>absolute 会相对最近的定位祖先，而不是自动相对按钮。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>被 overflow 裁掉</h3>
+            <p>浮层虽然位置正确，但祖先 overflow:hidden 可能把它直接裁掉。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>z-index 不生效</h3>
+            <p>可能是新的 stacking context 在影响层级，而不是数字不够大。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>手机端无 Hover</h3>
+            <p>Tooltip 可以是辅助信息，但关键操作不能只依赖 hover 才出现。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

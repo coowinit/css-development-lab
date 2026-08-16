@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t d">
+<t id="t">人物头像占位图</t><d id="d">无文字抽象人物头像</d>
+<rect width="600" height="600" fill="#d9d6d2"/>
+<circle cx="300" cy="205" r="105" fill="#b9b2aa"/>
+<path d="M115 600c20-170 110-260 185-260s165 90 185 260z" fill="#aaa39b"/>
+<circle cx="265" cy="195" r="8" fill="#77716c"/>
+<circle cx="335" cy="195" r="8" fill="#77716c"/>
+</svg>

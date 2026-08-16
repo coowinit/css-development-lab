@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 20：Dark Mode 与 Design Tokens 实验。">
+  <title>20 · Dark Mode & Design Tokens</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="page-wrap header-inner">
+      <a class="brand" href="#top">CSS Lab 20</a>
+
+      <button class="theme-toggle"
+              type="button"
+              data-theme-toggle
+              aria-label="切换主题"
+              aria-pressed="false">
+        <img class="theme-icon icon-sun" src="images/sun.svg" alt="">
+        <img class="theme-icon icon-moon" src="images/moon.svg" alt="">
+        <span data-theme-label>切换主题</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="page-wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">CSS DEVELOPMENT LAB · 20</p>
+          <h1>Dark Mode &amp; Design Tokens</h1>
+          <p class="hero-desc">
+            真正可维护的深色模式，不是把每个组件重新写一遍。
+            更好的方式是：组件只引用语义化变量，主题切换时只改变 Token。
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#tokens">查看 Tokens</a>
+            <a class="button button-secondary" href="#components">查看组件</a>
+          </div>
+        </div>
+
+        <div class="theme-preview" aria-label="主题预览卡片">
+          <div class="preview-toolbar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="preview-body">
+            <div class="preview-block large"></div>
+            <div class="preview-row">
+              <div class="preview-block"></div>
+              <div class="preview-block"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tokens-section" id="tokens">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">DESIGN TOKENS</p>
+            <h2>组件不直接记颜色</h2>
+          </div>
+          <p>
+            不让 Card 自己记住“浅色背景是 #fff、深色背景是 #181818”，
+            而是统一引用 <code>--surface</code>、<code>--text</code>、<code>--border</code> 等语义变量。
+          </p>
+        </div>
+
+        <div class="token-grid">
+          <article class="token-card">
+            <span class="token-dot dot-bg"></span>
+            <div>
+              <strong>--bg</strong>
+              <p>页面背景</p>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <span class="token-dot dot-surface"></span>
+            <div>
+              <strong>--surface</strong>
+              <p>Card / Panel 背景</p>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <span class="token-dot dot-text"></span>
+            <div>
+              <strong>--text</strong>
+              <p>主要文字</p>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <span class="token-dot dot-muted"></span>
+            <div>
+              <strong>--muted</strong>
+              <p>次级文字</p>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <span class="token-dot dot-border"></span>
+            <div>
+              <strong>--border</strong>
+              <p>边框与分隔线</p>
+            </div>
+          </article>
+
+          <article class="token-card">
+            <span class="token-dot dot-accent"></span>
+            <div>
+              <strong>--accent</strong>
+              <p>按钮与强调色</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="component-section" id="components">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">ONE COMPONENT CSS</p>
+            <h2>同一套组件自动适配主题</h2>
+          </div>
+          <p>
+            下方 Card、按钮、标签和信息块没有单独写 Dark 版本。
+            它们只使用 Token，所以主题改变后会一起更新。
+          </p>
+        </div>
+
+        <div class="component-grid">
+          <article class="product-card">
+            <div class="product-media">
+              <img src="images/product.svg" alt="产品场景占位图">
+            </div>
+            <div class="product-body">
+              <span class="tag">NEW PRODUCT</span>
+              <h3>Outdoor Composite Decking</h3>
+              <p>
+                一个简单产品卡片，用来观察背景、边框、文字、标签和按钮如何随主题统一变化。
+              </p>
+              <div class="product-actions">
+                <a class="button button-primary" href="#detail">查看详情</a>
+                <a class="button button-secondary" href="#download">下载资料</a>
+              </div>
+            </div>
+          </article>
+
+          <div class="panel-stack">
+            <article class="info-panel">
+              <span>01</span>
+              <div>
+                <h3>Semantic Tokens</h3>
+                <p>使用“用途名称”，而不是“颜色名称”。</p>
+              </div>
+            </article>
+
+            <article class="info-panel">
+              <span>02</span>
+              <div>
+                <h3>One Component Style</h3>
+                <p>组件 CSS 不需要复制一套 .dark-card。</p>
+              </div>
+            </article>
+
+            <article class="info-panel">
+              <span>03</span>
+              <div>
+                <h3>Global Theme Control</h3>
+                <p>只在主题层统一修改变量。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="strategy-section">
+      <div class="page-wrap strategy-grid">
+        <div class="strategy-copy">
+          <p class="eyebrow">THEME STRATEGY</p>
+          <h2>系统主题 + 用户手动选择</h2>
+          <p>
+            默认情况下页面尊重系统的 <code>prefers-color-scheme</code>。
+            用户点击右上角按钮后，会生成明确的手动主题，并保存到本地。
+          </p>
+        </div>
+
+        <div class="strategy-list">
+          <div>
+            <strong>首次访问</strong>
+            <span>跟随系统 light / dark</span>
+          </div>
+          <div>
+            <strong>用户手动切换</strong>
+            <span>写入 data-theme</span>
+          </div>
+          <div>
+            <strong>下次访问</strong>
+            <span>读取 localStorage 恢复选择</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-section">
+      <div class="page-wrap code-grid">
+        <div>
+          <p class="eyebrow">CORE CSS</p>
+          <h2>主题只改变量</h2>
+        </div>
+
+        <div class="code-card">
+<pre><code>:root {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --text: #171717;
+}
+
+[data-theme="dark"] {
+  --bg: #101112;
+  --surface: #181a1c;
+  --text: #f4f4f2;
+}
+
+.card {
+  background: var(--surface);
+  color: var(--text);
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules-section">
+      <div class="page-wrap">
+        <div class="rules-head">
+          <p class="eyebrow">PRACTICAL RULES</p>
+          <h2>Design Tokens 最值得建立的四层</h2>
+        </div>
+
+        <div class="rules-grid">
+          <article>
+            <span>01</span>
+            <h3>Primitive</h3>
+            <p>最基础的颜色、字号、尺寸原子值。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Semantic</h3>
+            <p>bg、surface、text、muted、border 等用途变量。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Component</h3>
+            <p>button-bg、card-radius 等局部组件 Token。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Theme</h3>
+            <p>Light / Dark 只负责重定义语义 Token。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

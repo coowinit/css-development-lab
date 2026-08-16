@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700" role="img" aria-labelledby="t d">
+<t id="t">横幅场景占位图</t><d id="d">主体偏右的无文字抽象 Banner 场景</d>
+<rect width="1400" height="700" fill="#d5d9d5"/>
+<rect x="120" y="150" width="440" height="330" rx="40" fill="#edf0ec"/>
+<path d="M0 620 L330 330 L590 520 L800 270 L1070 620 Z" fill="#aab5ae"/>
+<rect x="900" y="100" width="330" height="470" rx="42" fill="#eef1ee"/>
+<circle cx="1065" cy="250" r="105" fill="#9eaba4"/>
+<rect x="1010" y="340" width="110" height="210" rx="30" fill="#86948d"/>
+</svg>

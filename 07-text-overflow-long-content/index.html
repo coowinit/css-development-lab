@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 07：文本溢出与长内容处理实验。">
+  <title>07 · 文本溢出与长内容处理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 07</p>
+        <h1>文本溢出与长内容处理</h1>
+        <p class="intro-desc">
+          真实项目中的文字长度永远不完全可控。标题可能过长、URL 可能连续不换行、
+          英文可能没有空格。本实验集中研究如何让文字“可控地溢出”，而不是把布局直接撑坏。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">COMMON PROBLEMS</p>
+            <h2>六种最常见的文本问题</h2>
+          </div>
+          <p>
+            不同问题需要不同策略。单行省略、多行截断、强制换行和长 URL 处理不能混为一谈。
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span class="num">01</span>
+            <h3>单行标题省略</h3>
+            <div class="demo-box">
+              <p class="single-ellipsis">
+                这是一条非常非常长的产品标题，用来测试单行文本在容器宽度不足时如何自动显示省略号
+              </p>
+            </div>
+            <code>white-space + overflow + text-overflow</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="num">02</span>
+            <h3>两行标题截断</h3>
+            <div class="demo-box">
+              <p class="line-clamp-2">
+                这是一条用于产品卡片或新闻列表的长标题。我们希望最多显示两行，超出部分截断，
+                同时保持卡片高度更加稳定，不因为不同标题长度出现明显错位。
+              </p>
+            </div>
+            <code>line-clamp</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="num">03</span>
+            <h3>长英文单词</h3>
+            <div class="demo-box">
+              <p class="break-safe">
+                supercalifragilisticexpialidocioussupercalifragilisticexpialidocious
+              </p>
+            </div>
+            <code>overflow-wrap: anywhere</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="num">04</span>
+            <h3>超长 URL</h3>
+            <div class="demo-box">
+              <p class="break-safe">
+                https://example.com/products/composite-decking/ultra-long-category-name/technical-documents/download-center/specification-2026-final-version.pdf
+              </p>
+            </div>
+            <code>overflow-wrap</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="num">05</span>
+            <h3>中文长段落</h3>
+            <div class="demo-box">
+              <p class="zh-paragraph">
+                中文本身通常可以自然换行，但在窄容器、混合数字、型号、英文缩写以及标点较多的情况下，
+                仍然需要检查实际换行效果，尤其是在产品参数和移动端卡片中。
+              </p>
+            </div>
+            <code>normal wrapping</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="num">06</span>
+            <h3>Flex 子项被文字撑宽</h3>
+            <div class="flex-row">
+              <div class="icon-box">A</div>
+              <div class="flex-copy">
+                <strong class="single-ellipsis">
+                  This-is-a-very-long-flex-item-title-that-can-break-layout-without-min-width-zero
+                </strong>
+                <span>关键是给可伸缩子项设置 min-width: 0。</span>
+              </div>
+            </div>
+            <code>min-width: 0</code>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="comparison">
+      <div class="page-wrap comparison-grid">
+        <div class="comparison-copy">
+          <p class="eyebrow">WHEN TO USE WHAT</p>
+          <h2>截断和换行是两类问题</h2>
+          <p>
+            “内容太长”并不代表一定要省略。标题卡片可以截断，但产品参数、网址、技术说明通常更适合换行完整展示。
+          </p>
+        </div>
+
+        <div class="rules">
+          <div>
+            <strong>需要保持高度统一</strong>
+            <span>ellipsis / line-clamp</span>
+          </div>
+          <div>
+            <strong>内容必须完整展示</strong>
+            <span>overflow-wrap / word-break</span>
+          </div>
+          <div>
+            <strong>Flex / Grid 被撑破</strong>
+            <span>先检查 min-width: 0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="practical">
+      <div class="page-wrap">
+        <div class="practical-head">
+          <p class="eyebrow">PRACTICAL EXAMPLE</p>
+          <h2>真实产品列表中的组合用法</h2>
+        </div>
+
+        <div class="product-row">
+          <div class="product-thumb"></div>
+          <div class="product-info">
+            <p class="product-title line-clamp-2">
+              超长产品名称：新一代户外共挤木塑复合地板系统 Professional Series 2026 Outdoor Composite Decking
+            </p>
+            <p class="product-desc line-clamp-3">
+              这是一段较长的产品描述。列表页面通常不需要把完整介绍全部显示出来，
+              但又不能只显示一行，因此可以限制为三行，同时把完整内容保留到详情页。
+            </p>
+            <p class="product-url break-safe">
+              https://example.com/product/professional-series-2026-outdoor-composite-decking
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

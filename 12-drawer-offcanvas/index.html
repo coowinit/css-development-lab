@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 12：Drawer / Offcanvas 侧滑抽屉实验。">
+  <title>12 · Drawer / Offcanvas 侧滑抽屉</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 12</p>
+        <h1>Drawer / Offcanvas 侧滑抽屉</h1>
+        <p class="intro-desc">
+          手机导航、产品筛选、购物车、详情信息都很适合从页面边缘滑入。
+          本实验用统一的 Drawer 结构完成右侧抽屉，并把布局、动画和滚动逻辑尽量交给 CSS。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap lab-grid">
+        <div class="lab-copy">
+          <p class="eyebrow">CORE DEMO</p>
+          <h2>一个 Drawer，三种常见用途</h2>
+          <p>
+            三个入口共用同一个抽屉组件。JavaScript 只负责把对应内容放入抽屉并切换状态，
+            不重复创建三套打开、关闭、遮罩和滚动逻辑。
+          </p>
+
+          <div class="tips">
+            <div>
+              <strong>CSS</strong>
+              <span>负责 fixed、translateX、遮罩、宽度和内部滚动</span>
+            </div>
+            <div>
+              <strong>JavaScript</strong>
+              <span>负责 open / close 状态与内容切换</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span>01</span>
+            <h3>手机导航</h3>
+            <p>适合主菜单、分类菜单、账户入口。</p>
+            <button type="button" data-drawer-open="nav">打开导航</button>
+          </article>
+
+          <article class="demo-card">
+            <span>02</span>
+            <h3>产品筛选</h3>
+            <p>适合 WooCommerce 分类、属性、价格筛选。</p>
+            <button type="button" data-drawer-open="filter">打开筛选</button>
+          </article>
+
+          <article class="demo-card">
+            <span>03</span>
+            <h3>Mini Cart</h3>
+            <p>适合购物车摘要、询盘清单、收藏列表。</p>
+            <button type="button" data-drawer-open="cart">打开购物车</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div class="page-wrap explain-grid">
+        <div>
+          <p class="eyebrow">CORE CSS</p>
+          <h2>抽屉动画本质只是位移</h2>
+          <p>
+            关闭时整个 Panel 在视口右侧，打开时移动回原位。
+            不需要 JavaScript 连续计算坐标，也不需要复杂动画库。
+          </p>
+        </div>
+
+        <div class="code-card">
+<pre><code>.drawer {
+  position: fixed;
+  inset-block: 0;
+  right: 0;
+  transform: translateX(100%);
+}
+
+.drawer.is-open {
+  transform: translateX(0);
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="page-wrap">
+        <div class="usage-head">
+          <p class="eyebrow">COMMON USE CASES</p>
+          <h2>适合从边缘出现的辅助内容</h2>
+        </div>
+
+        <div class="usage-grid">
+          <article><span>Navigation</span><p>手机导航、多级分类。</p></article>
+          <article><span>Filter</span><p>产品筛选、搜索条件。</p></article>
+          <article><span>Cart</span><p>Mini Cart、询盘清单。</p></article>
+          <article><span>Detail</span><p>产品详情、说明、附加信息。</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="drawer-backdrop" data-drawer-backdrop hidden></div>
+
+  <aside class="drawer"
+         data-drawer
+         aria-hidden="true"
+         aria-labelledby="drawer-title">
+    <header class="drawer-head">
+      <div>
+        <p class="eyebrow" data-drawer-eyebrow>OFFCANVAS</p>
+        <h2 id="drawer-title" data-drawer-title>侧滑抽屉</h2>
+      </div>
+      <button class="icon-button" type="button" data-drawer-close aria-label="关闭抽屉">
+        <img src="images/close.svg" alt="">
+      </button>
+    </header>
+
+    <div class="drawer-body" data-drawer-body></div>
+
+    <footer class="drawer-foot" data-drawer-foot></footer>
+  </aside>
+
+  <template id="drawer-nav-template">
+    <nav class="drawer-nav" aria-label="抽屉导航">
+      <a href="#home">首页</a>
+      <a href="#products">产品中心</a>
+      <a href="#solutions">解决方案</a>
+      <a href="#projects">项目案例</a>
+      <a href="#about">关于我们</a>
+      <a href="#contact">联系我们</a>
+    </nav>
+  </template>
+
+  <template id="drawer-filter-template">
+    <form class="filter-form">
+      <fieldset>
+        <legend>产品类别</legend>
+        <label><input type="checkbox"> 户外地板</label>
+        <label><input type="checkbox"> 墙板系统</label>
+        <label><input type="checkbox"> 围栏系统</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>颜色</legend>
+        <label><input type="checkbox"> Teak</label>
+        <label><input type="checkbox"> Walnut</label>
+        <label><input type="checkbox"> Grey</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>应用场景</legend>
+        <label><input type="checkbox"> Residential</label>
+        <label><input type="checkbox"> Commercial</label>
+        <label><input type="checkbox"> Landscape</label>
+      </fieldset>
+    </form>
+  </template>
+
+  <template id="drawer-cart-template">
+    <div class="cart-list">
+      <article class="cart-item">
+        <div class="cart-thumb"></div>
+        <div>
+          <h3>Composite Decking CW-140</h3>
+          <p>Teak · 12 pcs</p>
+        </div>
+      </article>
+      <article class="cart-item">
+        <div class="cart-thumb alt"></div>
+        <div>
+          <h3>Wall Cladding CL-219</h3>
+          <p>Walnut · 8 pcs</p>
+        </div>
+      </article>
+      <article class="cart-item">
+        <div class="cart-thumb dark"></div>
+        <div>
+          <h3>Fence Panel FN-90</h3>
+          <p>Dark Grey · 6 pcs</p>
+        </div>
+      </article>
+    </div>
+  </template>
+</body>
+</html>

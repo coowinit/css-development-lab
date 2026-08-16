@@ -1,0 +1,350 @@
+/* =========================================================
+   CSS Development Lab 07
+   Text Overflow + Long Content
+   ========================================================= */
+
+:root {
+  --page-max: 1200px;
+  --text: #171717;
+  --muted: #686868;
+  --line: #e6e6e0;
+  --surface: #ffffff;
+  --soft: #f5f5f1;
+  --radius: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  line-height: 1.65;
+}
+
+.page-wrap {
+  width: min(calc(100% - 40px), var(--page-max));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #858585;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.intro {
+  padding: clamp(72px, 10vw, 130px) 0 clamp(58px, 8vw, 90px);
+  background:
+    radial-gradient(circle at 86% 14%, rgba(0, 0, 0, 0.05), transparent 27%),
+    linear-gradient(180deg, #fafaf8 0%, #f3f3ef 100%);
+}
+
+.intro-inner {
+  max-width: 980px;
+}
+
+.intro h1,
+.section-head h2,
+.comparison-copy h2,
+.practical-head h2 {
+  margin: 0;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.intro h1 {
+  font-size: clamp(2.8rem, 7vw, 6rem);
+}
+
+.intro-desc {
+  max-width: 800px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+}
+
+.lab {
+  padding: clamp(80px, 10vw, 130px) 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .78fr);
+  align-items: end;
+  gap: clamp(28px, 6vw, 80px);
+}
+
+.section-head h2,
+.comparison-copy h2,
+.practical-head h2 {
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+}
+
+.section-head > p,
+.comparison-copy > p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------- Demo grid ---------- */
+
+.demo-grid {
+  margin-top: clamp(38px, 6vw, 60px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.demo-card {
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.num {
+  color: #999;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.demo-card h3 {
+  margin: 14px 0 18px;
+  font-size: 1.25rem;
+}
+
+.demo-box {
+  min-width: 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--soft);
+}
+
+.demo-box p {
+  margin: 0;
+}
+
+.demo-card code {
+  display: block;
+  margin-top: 16px;
+  color: #777;
+  font-size: .82rem;
+}
+
+/* ---------- 1. Single-line ellipsis ---------- */
+
+.single-ellipsis {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 2. Multi-line clamp ---------- */
+
+.line-clamp-2,
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  -webkit-line-clamp: 3;
+}
+
+/* ---------- 3. Safe breaking ---------- */
+
+.break-safe {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* 中文通常保留默认换行即可 */
+.zh-paragraph {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* ---------- 4. Flex overflow ---------- */
+
+.flex-row {
+  min-width: 0;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 14px;
+  background: var(--soft);
+}
+
+.icon-box {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #fff;
+  background: #171717;
+  font-weight: 800;
+}
+
+.flex-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.flex-copy strong,
+.flex-copy span {
+  min-width: 0;
+}
+
+.flex-copy span {
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+/* ---------- Comparison ---------- */
+
+.comparison {
+  padding: 0 0 clamp(90px, 11vw, 140px);
+}
+
+.comparison-grid {
+  padding: clamp(30px, 6vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(320px, 1.15fr);
+  align-items: center;
+  gap: clamp(36px, 7vw, 90px);
+  border-radius: 28px;
+  background: var(--soft);
+}
+
+.comparison-copy > p {
+  margin-top: 22px;
+}
+
+.rules {
+  display: grid;
+  gap: 12px;
+}
+
+.rules > div {
+  padding: 18px 20px;
+  display: grid;
+  gap: 4px;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.rules strong {
+  font-size: .95rem;
+}
+
+.rules span {
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+/* ---------- Practical example ---------- */
+
+.practical {
+  padding: 0 0 clamp(90px, 12vw, 150px);
+}
+
+.practical-head {
+  max-width: 760px;
+}
+
+.product-row {
+  margin-top: 36px;
+  min-width: 0;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.product-thumb {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, #d8d8d2 0 50%, #b7b7ae 50% 100%);
+}
+
+.product-info {
+  min-width: 0;
+}
+
+.product-title {
+  margin: 0;
+  font-weight: 780;
+  font-size: 1.18rem;
+  line-height: 1.35;
+}
+
+.product-desc,
+.product-url {
+  margin: 12px 0 0;
+}
+
+.product-desc {
+  color: var(--muted);
+}
+
+.product-url {
+  color: #777;
+  font-size: .86rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 820px) {
+  .section-head,
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-wrap {
+    width: calc(100% - 28px);
+  }
+
+  .comparison-grid {
+    padding: 24px;
+  }
+
+  .product-row {
+    grid-template-columns: 1fr;
+  }
+
+  .product-thumb {
+    max-width: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 3px;
+}

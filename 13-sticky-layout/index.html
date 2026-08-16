@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 13：Sticky Header 与 Sticky Sidebar 实验。">
+  <title>13 · Sticky Header / Sticky Sidebar</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">CSS Lab 13</a>
+      <nav class="top-nav" aria-label="页面导航">
+        <a href="#rules">工作条件</a>
+        <a href="#fail">常见失效</a>
+        <a href="#usage">应用场景</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 13</p>
+        <h1>Sticky Header / Sticky Sidebar</h1>
+        <p class="intro-desc">
+          `position: sticky` 看起来简单，但真实项目里经常“写了却不生效”。
+          本实验通过顶部吸顶 Header 和左侧目录，系统理解 Sticky 的滚动容器、边界和常见失效原因。
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-layout">
+      <div class="page-wrap docs-grid">
+        <aside class="sidebar">
+          <div class="sidebar-sticky">
+            <p class="sidebar-title">本页目录</p>
+            <nav class="toc" aria-label="文章目录">
+              <a href="#rules">01 · Sticky 工作条件</a>
+              <a href="#container">02 · 相对哪个容器</a>
+              <a href="#fail">03 · 为什么会失效</a>
+              <a href="#overflow">04 · overflow 的影响</a>
+              <a href="#height">05 · 容器高度问题</a>
+              <a href="#usage">06 · 高频应用场景</a>
+            </nav>
+
+            <div class="sidebar-note">
+              <strong>核心观察</strong>
+              <span>滚动页面时，左侧目录会停在 Header 下方。</span>
+            </div>
+          </div>
+        </aside>
+
+        <article class="article">
+          <section id="rules">
+            <p class="eyebrow">01 · BASIC RULES</p>
+            <h2>Sticky 至少需要一个偏移值</h2>
+            <p>
+              仅仅写 <code>position: sticky</code> 并不会产生吸附效果。
+              浏览器还需要知道元素到达哪个位置后开始“粘住”。
+            </p>
+
+            <div class="code-card">
+<pre><code>.sidebar-sticky {
+  position: sticky;
+  top: 96px;
+}</code></pre>
+            </div>
+
+            <p>
+              当前页面顶部 Header 高度为 72px，因此侧栏使用 96px，
+              在 Header 下方额外保留一些间距。
+            </p>
+          </section>
+
+          <section id="container">
+            <p class="eyebrow">02 · SCROLL CONTAINER</p>
+            <h2>Sticky 相对最近的滚动容器工作</h2>
+            <p>
+              Sticky 并不一定相对浏览器视口。它会参考最近的可滚动祖先元素。
+              如果祖先创建了新的滚动容器，Sticky 的行为也会随之改变。
+            </p>
+
+            <div class="diagram">
+              <div>Viewport</div>
+              <span>↓</span>
+              <div>Scroll Container</div>
+              <span>↓</span>
+              <div>Sticky Element</div>
+            </div>
+
+            <p>
+              因此排查 Sticky 时，第一件事不是继续增加 <code>z-index</code>，
+              而是检查它的父级链条里有没有改变滚动上下文的元素。
+            </p>
+          </section>
+
+          <section id="fail">
+            <p class="eyebrow">03 · COMMON FAILURES</p>
+            <h2>为什么 sticky 经常“失效”</h2>
+
+            <div class="problem-grid">
+              <article>
+                <span>01</span>
+                <h3>忘记 top</h3>
+                <p>没有偏移值，元素没有明确的吸附触发位置。</p>
+              </article>
+              <article>
+                <span>02</span>
+                <h3>父级 overflow</h3>
+                <p>祖先创建了新的滚动容器，Sticky 不再相对你预期的页面滚动。</p>
+              </article>
+              <article>
+                <span>03</span>
+                <h3>父级高度太短</h3>
+                <p>Sticky 不能越过自己的容器边界，没有足够空间就看不出吸附效果。</p>
+              </article>
+              <article>
+                <span>04</span>
+                <h3>元素本身太高</h3>
+                <p>侧栏高度接近或超过视口时，吸附体验会变得很差。</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="overflow">
+            <p class="eyebrow">04 · OVERFLOW</p>
+            <h2>overflow 是最值得优先检查的地方</h2>
+            <p>
+              父级如果设置了 <code>overflow: auto</code>、<code>scroll</code>，
+              或某些情况下的 <code>hidden</code>，就可能改变 Sticky 参照的滚动容器。
+            </p>
+
+            <div class="compare-box">
+              <div>
+                <strong>预期</strong>
+                <code>body 滚动 → sidebar sticky</code>
+              </div>
+              <div>
+                <strong>实际</strong>
+                <code>parent overflow:auto → sticky 相对 parent</code>
+              </div>
+            </div>
+
+            <p>
+              所以遇到“同样的 Sticky 代码，在另一个页面却不工作”时，
+              很可能不是 Sticky 本身的问题，而是外层布局结构不同。
+            </p>
+          </section>
+
+          <section id="height">
+            <p class="eyebrow">05 · HEIGHT BOUNDARY</p>
+            <h2>Sticky 永远不能逃离自己的父容器</h2>
+            <p>
+              左侧目录只能在当前两栏布局的高度范围内吸附。
+              当正文结束、整个 Grid 容器结束时，Sticky 也会停止继续向下移动。
+            </p>
+
+            <p>
+              这也是 Sticky 和 <code>position: fixed</code> 最大的差异之一：
+              Fixed 相对视口，Sticky 仍然受文档结构和父容器边界约束。
+            </p>
+          </section>
+
+          <section id="usage">
+            <p class="eyebrow">06 · COMMON USE CASES</p>
+            <h2>最常见的应用场景</h2>
+
+            <div class="usage-list">
+              <div><strong>文章目录</strong><span>长文档、知识库、README 预览页</span></div>
+              <div><strong>产品筛选</strong><span>电商分类页左侧 Filter</span></div>
+              <div><strong>产品购买区</strong><span>详情页右侧价格、按钮、询盘信息</span></div>
+              <div><strong>后台工具栏</strong><span>操作栏、筛选栏、摘要区域</span></div>
+              <div><strong>Sticky Header</strong><span>网站主导航与顶部工具栏</span></div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="page-wrap summary-grid">
+        <div>
+          <p class="eyebrow">DEBUG ORDER</p>
+          <h2>Sticky 不工作时按这个顺序检查</h2>
+        </div>
+
+        <ol>
+          <li>是否设置了 <code>top / bottom</code>？</li>
+          <li>祖先是否有 <code>overflow</code>？</li>
+          <li>父容器是否有足够高度？</li>
+          <li>Sticky 元素自身是否过高？</li>
+          <li>是否真的在正确的滚动容器里滚动？</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

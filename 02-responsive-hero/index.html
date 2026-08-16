@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 02：响应式 Hero Banner 左文右图布局实验。">
+  <title>02 · Hero Banner 左文右图响应式布局</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <p class="eyebrow">CSS DEVELOPMENT LAB · 02</p>
+          <h1>用现代 CSS 构建真正稳定的 Hero Banner</h1>
+          <p class="hero-desc">
+            桌面端左文右图，手机端自然堆叠。重点研究 Grid、clamp()、
+            aspect-ratio 与 object-fit，避免为了响应式写大量重复媒体查询。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#features">查看实验重点</a>
+            <a class="btn btn-secondary" href="#demo">继续浏览</a>
+          </div>
+
+          <ul class="hero-points" aria-label="实验特点">
+            <li>自适应双栏</li>
+            <li>流式字号与间距</li>
+            <li>统一图片比例</li>
+          </ul>
+        </div>
+
+        <div class="hero-media">
+          <div class="hero-image-wrap">
+            <img src="images/hero-placeholder.svg" alt="抽象建筑与材料场景占位图">
+          </div>
+
+          <div class="hero-stat">
+            <strong>02</strong>
+            <span>Responsive Hero</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="section-head">
+        <p class="eyebrow">CORE TOPICS</p>
+        <h2>本实验重点</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span>01</span>
+          <h3>CSS Grid</h3>
+          <p>用双栏 Grid 建立稳定的文图布局，而不是依赖大量固定宽度。</p>
+        </article>
+
+        <article class="feature-card">
+          <span>02</span>
+          <h3>clamp()</h3>
+          <p>让标题、间距和模块尺寸在不同屏幕之间平滑变化。</p>
+        </article>
+
+        <article class="feature-card">
+          <span>03</span>
+          <h3>aspect-ratio</h3>
+          <p>统一图片容器比例，避免加载前后发生明显布局跳动。</p>
+        </article>
+
+        <article class="feature-card">
+          <span>04</span>
+          <h3>object-fit</h3>
+          <p>控制图片如何填充容器，理解 cover 与 contain 的真实用途。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="demo">
+      <div class="demo-copy">
+        <p class="eyebrow">WHY IT MATTERS</p>
+        <h2>Hero 是最值得练熟的页面基础模块之一</h2>
+        <p>
+          企业官网、产品站、Landing Page、电商首页几乎都会出现 Hero。
+          如果这一类布局处理稳定，后面的图文 Section、产品介绍、案例展示都会更容易。
+        </p>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-card-media">
+          <img src="images/hero-placeholder.svg" alt="">
+        </div>
+        <div class="demo-card-body">
+          <span>可复用结构</span>
+          <h3>同样的图片规则，也能直接复用到普通内容卡片中。</h3>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

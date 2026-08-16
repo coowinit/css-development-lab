@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">卡片占位图 5</title>
+  <desc id="desc">无文字抽象几何 SVG，用于响应式卡片网格实验</desc>
+  <rect width="800" height="600" fill="#ded8d0"/>
+  <rect x="150" y="150" width="520" height="340" rx="34" fill="#f1ede7"/>
+  <rect x="230" y="240" width="430" height="300" rx="28" fill="#bcae9e"/>
+  <circle cx="510" cy="210" r="78" fill="#f1ede7"/>
+  <path d="M70 510 L280 270 L430 420 L570 245 L740 510 Z" fill="#bcae9e" opacity=".72"/>
+</svg>

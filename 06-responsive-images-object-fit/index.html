@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 06：响应式图片与 object-fit 实验。">
+  <title>06 · 图片展示与 object-fit</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 06</p>
+        <h1>图片展示与 object-fit</h1>
+        <p class="intro-desc">
+          图片不应该只靠 `width: 100%`。不同场景需要不同的比例、裁切和对齐策略。
+          本实验集中比较产品图、Logo、头像与 Banner 的常见处理方式。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">FOUR COMMON CASES</p>
+            <h2>四种最常见图片场景</h2>
+          </div>
+          <p>
+            重点不是记属性，而是建立判断：什么时候应该裁切，什么时候必须完整显示，
+            什么时候需要改变视觉焦点。
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <div class="demo-media ratio-4-3 cover">
+              <img src="images/product-scene.svg" alt="产品场景占位图">
+            </div>
+            <div class="demo-body">
+              <span class="badge">cover</span>
+              <h3>产品 / 新闻封面</h3>
+              <p>
+                容器必须被完整填满，允许裁切图片边缘。适合卡片封面、案例图、博客缩略图。
+              </p>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div class="demo-media logo-box contain">
+              <img src="images/logo-mark.svg" alt="品牌 Logo 占位图">
+            </div>
+            <div class="demo-body">
+              <span class="badge">contain</span>
+              <h3>Logo / 产品包装图</h3>
+              <p>
+                内容必须完整显示，不允许裁掉主体。适合 Logo、图标、包装图、部分电商主图。
+              </p>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div class="demo-media avatar-box cover">
+              <img src="images/portrait.svg" alt="人物头像占位图">
+            </div>
+            <div class="demo-body">
+              <span class="badge">cover + circle</span>
+              <h3>头像 / 团队成员</h3>
+              <p>
+                保持正方形或圆形容器，用 `cover` 填满，再用 `object-position` 调整人物焦点。
+              </p>
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <div class="demo-media banner-box cover focus-right">
+              <img src="images/banner-scene.svg" alt="横幅场景占位图">
+            </div>
+            <div class="demo-body">
+              <span class="badge">object-position</span>
+              <h3>Banner 焦点控制</h3>
+              <p>
+                Banner 常常会被裁切，此时可以把视觉焦点偏向左侧、右侧、顶部或自定义位置。
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="page-wrap compare-grid">
+        <div class="compare-copy">
+          <p class="eyebrow">COVER VS CONTAIN</p>
+          <h2>同一张图，不同策略</h2>
+          <p>
+            `cover` 优先“填满容器”，`contain` 优先“完整显示图片”。
+            两者没有谁更高级，关键取决于业务场景。
+          </p>
+        </div>
+
+        <div class="compare-demo">
+          <div class="compare-item">
+            <strong>cover</strong>
+            <div class="mini-frame cover">
+              <img src="images/product-scene.svg" alt="">
+            </div>
+          </div>
+          <div class="compare-item">
+            <strong>contain</strong>
+            <div class="mini-frame contain">
+              <img src="images/product-scene.svg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <div class="page-wrap notes-grid">
+        <article>
+          <span>01</span>
+          <h3>aspect-ratio</h3>
+          <p>先定义容器比例，再让图片适配容器，页面结构会更稳定。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>object-fit</h3>
+          <p>决定图片如何填充容器：裁切填满，还是完整显示。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>object-position</h3>
+          <p>决定裁切发生时保留哪个视觉区域，常用于人物、Banner、产品焦点。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

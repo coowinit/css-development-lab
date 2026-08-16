@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 01：响应式 Header 与多级导航实验。">
+  <title>01 · 响应式 Header + 多级导航</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <div class="nav-wrap">
+      <a class="brand" href="#" aria-label="CSS Lab 首页">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span class="brand-text">CSS Lab</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="主导航">
+        <ul class="menu">
+          <li><a href="#home">首页</a></li>
+
+          <li class="has-submenu">
+            <a href="#products">
+              产品
+              <img class="menu-arrow" src="images/chevron-down.svg" alt="" aria-hidden="true">
+            </a>
+            <ul class="submenu">
+              <li><a href="#decking">户外地板</a></li>
+              <li><a href="#cladding">墙板系统</a></li>
+              <li><a href="#fencing">围栏系统</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#solutions">
+              解决方案
+              <img class="menu-arrow" src="images/chevron-down.svg" alt="" aria-hidden="true">
+            </a>
+            <ul class="submenu">
+              <li><a href="#residential">住宅项目</a></li>
+              <li><a href="#commercial">商业项目</a></li>
+              <li><a href="#landscape">景观工程</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#about">关于我们</a></li>
+          <li><a href="#news">新闻资讯</a></li>
+        </ul>
+      </nav>
+
+      <a class="header-cta" href="#contact">联系我们</a>
+
+      <button class="menu-toggle" type="button" aria-label="打开导航菜单"
+              aria-controls="mobile-drawer" aria-expanded="false" data-menu-toggle>
+        <img src="images/menu.svg" alt="" aria-hidden="true">
+      </button>
+    </div>
+  </header>
+
+  <div class="drawer-backdrop" data-backdrop hidden></div>
+
+  <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" data-drawer>
+    <div class="drawer-head">
+      <a class="brand" href="#home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span class="brand-text">CSS Lab</span>
+      </a>
+
+      <button class="drawer-close" type="button" aria-label="关闭导航菜单" data-drawer-close>
+        <img src="images/close.svg" alt="" aria-hidden="true">
+      </button>
+    </div>
+
+    <nav class="mobile-nav" aria-label="手机端导航">
+      <ul class="mobile-menu">
+        <li><a href="#home">首页</a></li>
+
+        <li class="mobile-item has-children">
+          <div class="mobile-row">
+            <a href="#products">产品</a>
+            <button class="submenu-toggle" type="button" aria-label="展开产品子菜单"
+                    aria-expanded="false">
+              <img src="images/chevron-down.svg" alt="" aria-hidden="true">
+            </button>
+          </div>
+          <div class="mobile-submenu">
+            <ul class="mobile-submenu-list">
+              <li><a href="#decking">户外地板</a></li>
+              <li><a href="#cladding">墙板系统</a></li>
+              <li><a href="#fencing">围栏系统</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="mobile-item has-children">
+          <div class="mobile-row">
+            <a href="#solutions">解决方案</a>
+            <button class="submenu-toggle" type="button" aria-label="展开解决方案子菜单"
+                    aria-expanded="false">
+              <img src="images/chevron-down.svg" alt="" aria-hidden="true">
+            </button>
+          </div>
+          <div class="mobile-submenu">
+            <ul class="mobile-submenu-list">
+              <li><a href="#residential">住宅项目</a></li>
+              <li><a href="#commercial">商业项目</a></li>
+              <li><a href="#landscape">景观工程</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li><a href="#about">关于我们</a></li>
+        <li><a href="#news">新闻资讯</a></li>
+      </ul>
+
+      <a class="drawer-cta" href="#contact">联系我们</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 01</p>
+        <h1>响应式 Header<br>与多级导航</h1>
+        <p class="hero-text">
+          一个贴近企业官网真实场景的导航实验：桌面端下拉菜单、Sticky Header、
+          手机端抽屉菜单、二级菜单展开，以及可靠的层级与滚动控制。
+        </p>
+        <a class="primary-btn" href="#features">查看实验重点</a>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="section-head">
+        <p class="eyebrow">CORE TOPICS</p>
+        <h2>本实验重点</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span>01</span>
+          <h3>Sticky Header</h3>
+          <p>理解 sticky、层级、背景与滚动页面之间的关系。</p>
+        </article>
+        <article class="feature-card">
+          <span>02</span>
+          <h3>Desktop Dropdown</h3>
+          <p>用 CSS 完成桌面端下拉菜单的定位、显示与过渡。</p>
+        </article>
+        <article class="feature-card">
+          <span>03</span>
+          <h3>Mobile Drawer</h3>
+          <p>用 transform 构建右侧抽屉，JS 只负责状态切换。</p>
+        </article>
+        <article class="feature-card">
+          <span>04</span>
+          <h3>Responsive System</h3>
+          <p>桌面与手机端使用不同导航表达，但共享统一信息结构。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="products">
+      <div>
+        <p class="eyebrow">DEMO CONTENT</p>
+        <h2>向下滚动，观察 Sticky Header</h2>
+      </div>
+      <p>
+        页面故意保留足够高度，方便测试 Header 吸顶、桌面下拉菜单、
+        手机抽屉菜单以及打开导航时的页面滚动锁定。
+      </p>
+    </section>
+
+    <section class="content-section alt" id="solutions">
+      <div>
+        <p class="eyebrow">REUSABLE</p>
+        <h2>适合直接拆到真实项目中</h2>
+      </div>
+      <p>
+        HTML、CSS、JavaScript 和 SVG 图标完全分离。后续修改菜单文字与链接时，
+        不需要改 CSS；如果页面没有二级菜单，也可以直接删除对应结构。
+      </p>
+    </section>
+
+    <section class="content-section" id="about">
+      <div>
+        <p class="eyebrow">CSS FIRST</p>
+        <h2>CSS 负责表现，JS 只负责状态</h2>
+      </div>
+      <p>
+        菜单滑入、箭头旋转、子菜单展开、遮罩与响应式均由 CSS 处理；
+        JavaScript 只负责添加或移除状态类以及同步 ARIA 属性。
+      </p>
+    </section>
+
+    <section class="content-section alt" id="news">
+      <div>
+        <p class="eyebrow">MAINTAINABLE</p>
+        <h2>保持结构简单，方便长期维护</h2>
+      </div>
+      <p>
+        这不是完整网站主题，而是一个最小、独立、可复用的 CSS 实验。
+        后续 20 个实验也会尽量保持这一原则。
+      </p>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="eyebrow">END OF LAB 01</p>
+      <h2>响应式导航实验完成</h2>
+    </section>
+  </main>
+</body>
+</html>

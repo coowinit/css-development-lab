@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 10：Tabs 标签页实验。">
+  <title>10 · Tabs 标签页</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 10</p>
+        <h1>Tabs 标签页</h1>
+        <p class="intro-desc">
+          产品详情、技术参数、下载资料、FAQ 分类都经常使用 Tabs。
+          本实验重点研究：如何让多个标签共享一套结构和逻辑，并兼顾鼠标、键盘与响应式。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap lab-grid">
+        <div class="lab-copy">
+          <p class="eyebrow">CORE DEMO</p>
+          <h2>一套结构，多组内容</h2>
+          <p>
+            JavaScript 不关心具体有几个 Tab，只读取 `role="tab"` 与对应的 `aria-controls`。
+            后期新增标签时，不需要继续复制事件代码。
+          </p>
+
+          <div class="tips">
+            <div>
+              <strong>CSS</strong>
+              <span>负责激活样式、内容布局、横向滚动和响应式</span>
+            </div>
+            <div>
+              <strong>JavaScript</strong>
+              <span>负责 active 状态、ARIA 同步与键盘焦点</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-list" role="tablist" aria-label="产品信息">
+            <button class="tab-button is-active"
+                    type="button"
+                    role="tab"
+                    id="tab-overview"
+                    aria-selected="true"
+                    aria-controls="panel-overview"
+                    tabindex="0">
+              产品概述
+            </button>
+
+            <button class="tab-button"
+                    type="button"
+                    role="tab"
+                    id="tab-spec"
+                    aria-selected="false"
+                    aria-controls="panel-spec"
+                    tabindex="-1">
+              技术参数
+            </button>
+
+            <button class="tab-button"
+                    type="button"
+                    role="tab"
+                    id="tab-download"
+                    aria-selected="false"
+                    aria-controls="panel-download"
+                    tabindex="-1">
+              下载资料
+            </button>
+
+            <button class="tab-button"
+                    type="button"
+                    role="tab"
+                    id="tab-install"
+                    aria-selected="false"
+                    aria-controls="panel-install"
+                    tabindex="-1">
+              安装说明
+            </button>
+          </div>
+
+          <div class="tab-panels">
+            <section class="tab-panel is-active"
+                     role="tabpanel"
+                     id="panel-overview"
+                     aria-labelledby="tab-overview">
+              <div class="panel-grid">
+                <div>
+                  <p class="panel-label">OVERVIEW</p>
+                  <h3>适合企业官网和产品详情页的通用 Tabs 结构</h3>
+                </div>
+                <p>
+                  当前面板显示产品概述。Tab 按钮只控制哪一个 Panel 被激活，
+                  内容本身仍然保持独立、清晰的 HTML 结构。
+                </p>
+              </div>
+            </section>
+
+            <section class="tab-panel"
+                     role="tabpanel"
+                     id="panel-spec"
+                     aria-labelledby="tab-spec"
+                     hidden>
+              <div class="spec-grid">
+                <div><span>尺寸</span><strong>140 × 23 mm</strong></div>
+                <div><span>长度</span><strong>2.2 / 2.9 / 3.6 m</strong></div>
+                <div><span>表面</span><strong>木纹压花</strong></div>
+                <div><span>应用</span><strong>庭院 / 商业景观</strong></div>
+              </div>
+            </section>
+
+            <section class="tab-panel"
+                     role="tabpanel"
+                     id="panel-download"
+                     aria-labelledby="tab-download"
+                     hidden>
+              <div class="download-list">
+                <a href="#catalog"><span>产品目录 PDF</span><strong>5.8 MB</strong></a>
+                <a href="#datasheet"><span>技术参数表</span><strong>1.2 MB</strong></a>
+                <a href="#warranty"><span>质保说明</span><strong>680 KB</strong></a>
+              </div>
+            </section>
+
+            <section class="tab-panel"
+                     role="tabpanel"
+                     id="panel-install"
+                     aria-labelledby="tab-install"
+                     hidden>
+              <ol class="steps">
+                <li><span>01</span><p>检查基层平整度与排水方向。</p></li>
+                <li><span>02</span><p>按设计间距安装龙骨系统。</p></li>
+                <li><span>03</span><p>使用配套卡扣固定板材。</p></li>
+                <li><span>04</span><p>完成边缘收口并检查伸缩缝。</p></li>
+              </ol>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div class="page-wrap explain-grid">
+        <div>
+          <p class="eyebrow">STATE MODEL</p>
+          <h2>Tab 的核心只有一个：当前谁是 active</h2>
+        </div>
+
+        <div class="code-card">
+<pre><code>button.classList.toggle(
+  "is-active",
+  shouldActivate
+);
+
+panel.hidden =
+  !shouldActivate;
+
+button.setAttribute(
+  "aria-selected",
+  String(shouldActivate)
+);</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="keyboard">
+      <div class="page-wrap">
+        <div class="keyboard-head">
+          <p class="eyebrow">KEYBOARD</p>
+          <h2>左右方向键也应该能切换</h2>
+        </div>
+
+        <div class="keyboard-grid">
+          <article>
+            <span>←</span>
+            <h3>Previous</h3>
+            <p>切换到前一个 Tab。</p>
+          </article>
+          <article>
+            <span>→</span>
+            <h3>Next</h3>
+            <p>切换到下一个 Tab。</p>
+          </article>
+          <article>
+            <span>Home</span>
+            <h3>First</h3>
+            <p>直接跳到第一个 Tab。</p>
+          </article>
+          <article>
+            <span>End</span>
+            <h3>Last</h3>
+            <p>直接跳到最后一个 Tab。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

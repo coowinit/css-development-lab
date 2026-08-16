@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 09：Accordion 手风琴实验。">
+  <title>09 · Accordion 手风琴</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 09</p>
+        <h1>Accordion 手风琴</h1>
+        <p class="intro-desc">
+          FAQ、产品参数、服务流程、分类导航都经常使用手风琴。
+          本实验重点研究：不用计算内容高度，如何让展开动画稳定、结构清晰、手机端也好用。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap lab-grid">
+        <div class="lab-copy">
+          <p class="eyebrow">CORE DEMO</p>
+          <h2>一次只展开一个项目</h2>
+          <p>
+            默认展开第一项。点击其他标题后，当前项打开，其余项自动关闭。
+            再次点击当前项不会折叠，确保始终至少保留一个展开状态。
+          </p>
+
+          <div class="tips">
+            <div>
+              <strong>CSS</strong>
+              <span>负责展开高度、箭头旋转、边框与动画</span>
+            </div>
+            <div>
+              <strong>JavaScript</strong>
+              <span>只负责切换 `.is-open` 与 ARIA 状态</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" data-accordion>
+          <article class="accordion-item is-open">
+            <h3>
+              <button class="accordion-trigger"
+                      type="button"
+                      aria-expanded="true"
+                      aria-controls="panel-1"
+                      id="trigger-1">
+                <span class="trigger-index">01</span>
+                <span class="trigger-title">为什么不用固定 max-height？</span>
+                <span class="trigger-icon" aria-hidden="true">
+                  <img src="images/chevron.svg" alt="">
+                </span>
+              </button>
+            </h3>
+
+            <div class="accordion-panel"
+                 id="panel-1"
+                 role="region"
+                 aria-labelledby="trigger-1">
+              <div class="accordion-panel-inner">
+                <p>
+                  固定 `max-height: 500px` 虽然简单，但内容变化后可能不够高，
+                  或者动画时间与真实内容高度不匹配。本实验使用 Grid 的
+                  `grid-template-rows: 0fr → 1fr` 来完成展开。
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item">
+            <h3>
+              <button class="accordion-trigger"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="panel-2"
+                      id="trigger-2">
+                <span class="trigger-index">02</span>
+                <span class="trigger-title">为什么 JS 不直接设置高度？</span>
+                <span class="trigger-icon" aria-hidden="true">
+                  <img src="images/chevron.svg" alt="">
+                </span>
+              </button>
+            </h3>
+
+            <div class="accordion-panel"
+                 id="panel-2"
+                 role="region"
+                 aria-labelledby="trigger-2">
+              <div class="accordion-panel-inner">
+                <p>
+                  如果 JavaScript 每次都读取 `scrollHeight` 再写入像素高度，
+                  逻辑会更复杂，也会让布局和交互耦合。本实验只让 JS 管状态，
+                  CSS 自己处理视觉展开。
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item">
+            <h3>
+              <button class="accordion-trigger"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="panel-3"
+                      id="trigger-3">
+                <span class="trigger-index">03</span>
+                <span class="trigger-title">这种结构适合哪些项目？</span>
+                <span class="trigger-icon" aria-hidden="true">
+                  <img src="images/chevron.svg" alt="">
+                </span>
+              </button>
+            </h3>
+
+            <div class="accordion-panel"
+                 id="panel-3"
+                 role="region"
+                 aria-labelledby="trigger-3">
+              <div class="accordion-panel-inner">
+                <p>
+                  最常见的是 FAQ、WooCommerce 产品说明、技术参数、服务流程、
+                  左侧分类、招聘职位、帮助中心，以及手机端需要折叠的大段内容。
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="accordion-item">
+            <h3>
+              <button class="accordion-trigger"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="panel-4"
+                      id="trigger-4">
+                <span class="trigger-index">04</span>
+                <span class="trigger-title">后期增加项目要改 JavaScript 吗？</span>
+                <span class="trigger-icon" aria-hidden="true">
+                  <img src="images/chevron.svg" alt="">
+                </span>
+              </button>
+            </h3>
+
+            <div class="accordion-panel"
+                 id="panel-4"
+                 role="region"
+                 aria-labelledby="trigger-4">
+              <div class="accordion-panel-inner">
+                <p>
+                  不需要。JavaScript 会自动寻找容器里的所有 `.accordion-trigger`。
+                  后期只要复制一组 HTML，并保证 `id` 与 `aria-controls` 对应即可。
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div class="page-wrap explain-grid">
+        <div>
+          <p class="eyebrow">KEY TECHNIQUE</p>
+          <h2>用 Grid 做“自动高度”的展开动画</h2>
+        </div>
+
+        <div class="code-card">
+<pre><code>.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+
+.accordion-item.is-open
+.accordion-panel {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel-inner {
+  overflow: hidden;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage">
+      <div class="page-wrap">
+        <div class="usage-head">
+          <p class="eyebrow">COMMON USE CASES</p>
+          <h2>最常见的应用场景</h2>
+        </div>
+
+        <div class="usage-grid">
+          <article>
+            <span>FAQ</span>
+            <p>帮助中心、售前问题、售后说明。</p>
+          </article>
+          <article>
+            <span>Product</span>
+            <p>产品参数、安装说明、下载资料。</p>
+          </article>
+          <article>
+            <span>Process</span>
+            <p>服务流程、步骤说明、项目阶段。</p>
+          </article>
+          <article>
+            <span>Navigation</span>
+            <p>手机分类、左侧目录、多级菜单。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

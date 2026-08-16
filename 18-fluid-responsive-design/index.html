@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 18：Fluid Responsive Design 流体响应式设计实验。">
+  <title>18 · Fluid Responsive Design 流体响应式设计</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="page-wrap hero-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 18</p>
+        <h1>Fluid Responsive Design</h1>
+        <p class="hero-desc">
+          响应式不一定等于“手机一套、平板一套、桌面一套”。
+          很多尺寸可以在一个合理范围内连续变化，让页面从小屏到大屏更自然。
+        </p>
+        <div class="hero-actions">
+          <a href="#demo" class="button primary">查看实验</a>
+          <a href="#rules" class="button secondary">核心规则</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo" id="demo">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CORE DEMO</p>
+            <h2>让尺寸在区间内自然变化</h2>
+          </div>
+          <p>
+            下面的标题、间距、卡片内边距、按钮尺寸和内容宽度都不是靠多个断点硬切换，
+            而是通过流体表达式在最小值和最大值之间连续变化。
+          </p>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span class="demo-index">01</span>
+            <h3>流体字号</h3>
+            <p class="fluid-title">
+              这个标题会随着视口变化，但不会无限变大或变小。
+            </p>
+            <code>font-size: clamp(1.5rem, 4vw, 3.5rem)</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">02</span>
+            <h3>流体间距</h3>
+            <div class="spacing-box">
+              <span>Padding 会自然变化</span>
+            </div>
+            <code>padding: clamp(1rem, 4vw, 3rem)</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">03</span>
+            <h3>内容最大宽度</h3>
+            <div class="width-box">
+              <span>小屏几乎铺满，大屏不会无限拉宽</span>
+            </div>
+            <code>width: min(100%, 720px)</code>
+          </article>
+
+          <article class="demo-card">
+            <span class="demo-index">04</span>
+            <h3>最小尺寸保护</h3>
+            <div class="min-box">
+              <span>按钮不会比可点击尺寸更小</span>
+            </div>
+            <code>min-height: max(44px, 3vw)</code>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="scale-section">
+      <div class="page-wrap scale-grid">
+        <div class="scale-copy">
+          <p class="eyebrow">FLUID SCALE</p>
+          <h2>页面不是突然“跳变”，而是连续缩放</h2>
+          <p>
+            传统响应式经常在 768px、1024px 等节点突然改变字号和间距。
+            流体设计则让这些数值在两个边界之间平滑变化。
+          </p>
+        </div>
+
+        <div class="scale-visual">
+          <div class="scale-item small">
+            <span>Small</span>
+          </div>
+          <div class="scale-item medium">
+            <span>Medium</span>
+          </div>
+          <div class="scale-item large">
+            <span>Large</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="functions" id="rules">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">THREE FUNCTIONS</p>
+            <h2>clamp / min / max</h2>
+          </div>
+          <p>
+            三个函数解决的是不同问题：限制区间、选择更小值、选择更大值。
+            理清这三个函数后，很多响应式尺寸都可以写得更简洁。
+          </p>
+        </div>
+
+        <div class="function-grid">
+          <article>
+            <span>clamp()</span>
+            <h3>限制在一个区间</h3>
+            <pre><code>clamp(
+  最小值,
+  理想值,
+  最大值
+)</code></pre>
+            <p>最适合字号、间距、模块尺寸等连续变化。</p>
+          </article>
+
+          <article>
+            <span>min()</span>
+            <h3>选择更小的值</h3>
+            <pre><code>width:
+  min(100%, 1200px);</code></pre>
+            <p>最适合“不能超过最大宽度，但小屏要自动缩小”。</p>
+          </article>
+
+          <article>
+            <span>max()</span>
+            <h3>选择更大的值</h3>
+            <pre><code>min-height:
+  max(44px, 3vw);</code></pre>
+            <p>最适合确保点击区域、间距等不低于可用下限。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="real-world">
+      <div class="page-wrap real-grid">
+        <div>
+          <p class="eyebrow">REAL WORLD</p>
+          <h2>真实页面中的组合写法</h2>
+        </div>
+
+        <div class="code-card">
+<pre><code>:root {
+  --space-section:
+    clamp(4rem, 9vw, 8rem);
+
+  --space-card:
+    clamp(1.25rem, 3vw, 2.25rem);
+
+  --title-xl:
+    clamp(2.5rem, 7vw, 6rem);
+}
+
+.page-wrap {
+  width:
+    min(calc(100% - 2rem), 1200px);
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="media-section">
+      <div class="page-wrap media-grid">
+        <div class="media-copy">
+          <p class="eyebrow">NOT ZERO MEDIA QUERIES</p>
+          <h2>流体设计不是消灭 Media Query</h2>
+          <p>
+            连续变化适合“尺寸”，但布局结构发生变化时仍然应该使用 Media Query。
+            例如两栏变一栏、桌面菜单变手机菜单，这属于布局模式切换。
+          </p>
+        </div>
+
+        <div class="decision-list">
+          <div>
+            <strong>字号 / 间距 / 宽度</strong>
+            <span>优先考虑 clamp / min / max</span>
+          </div>
+          <div>
+            <strong>两栏 → 一栏</strong>
+            <span>Media Query 更合适</span>
+          </div>
+          <div>
+            <strong>组件内部自适应</strong>
+            <span>可结合 Container Query</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

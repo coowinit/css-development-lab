@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab：20 个独立 CSS 实战实验预览首页。">
+  <title>CSS Development Lab · 20 个独立实战实验</title>
+  <style>
+    :root {
+      --bg: #f6f6f2;
+      --surface: #ffffff;
+      --surface-soft: #efefea;
+      --text: #171717;
+      --muted: #6c6c67;
+      --line: #dfdfd8;
+      --accent: #171717;
+      --page-max: 1240px;
+      --radius: 22px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .07);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page-wrap {
+      width: min(calc(100% - 40px), var(--page-max));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      background: rgba(246,246,242,.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      font-weight: 850;
+      letter-spacing: -.025em;
+    }
+
+    .part-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .part-nav a {
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .part-nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: clamp(76px, 10vw, 132px) 0 clamp(60px, 8vw, 100px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .72fr);
+      align-items: end;
+      gap: clamp(36px, 8vw, 110px);
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+    }
+
+    .hero h1 {
+      max-width: 10ch;
+      margin: 0;
+      font-size: clamp(3rem, 7.5vw, 7.2rem);
+      line-height: .94;
+      letter-spacing: -.065em;
+    }
+
+    .hero-side {
+      padding-bottom: 8px;
+    }
+
+    .hero-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+    }
+
+    .hero-stats {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hero-stats div {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .hero-stats strong {
+      display: block;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .hero-stats span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    .toolbar {
+      padding-bottom: 28px;
+    }
+
+    .toolbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 460px;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      color: #888;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 18px 0 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      outline: none;
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .search-input:focus {
+      border-color: #aaa;
+      box-shadow: 0 0 0 3px rgba(0,0,0,.05);
+    }
+
+    .search-result {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .projects {
+      padding-bottom: clamp(90px, 12vw, 150px);
+    }
+
+    .project-section {
+      padding: 52px 0 34px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .section-index {
+      color: #aaa;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .section-heading p {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3.4vw, 3rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      min-width: 0;
+      min-height: 300px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: #c6c6bf;
+      box-shadow: var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .project-number {
+      color: #999;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
+
+    .open-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--surface-soft);
+      transition: transform 180ms ease;
+    }
+
+    .open-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .project-card:hover .open-icon {
+      transform: rotate(5deg);
+    }
+
+    .card-content {
+      margin-top: auto;
+      padding-top: 42px;
+    }
+
+    .project-en {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .project-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+
+    .project-desc {
+      margin: 11px 0 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .card-foot {
+      margin-top: 24px;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--line);
+      font-size: .82rem;
+      font-weight: 720;
+    }
+
+    .project-card[hidden] {
+      display: none;
+    }
+
+    .project-section.is-empty {
+      display: none;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 52px 24px;
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
+    .footer {
+      padding: 28px 0 46px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    @media (max-width: 1080px) {
+      .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .part-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        max-width: 11ch;
+      }
+
+      .hero-side {
+        max-width: 640px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-wrap {
+        width: calc(100% - 28px);
+      }
+
+      .header-inner {
+        min-height: 64px;
+      }
+
+      .brand {
+        font-size: .94rem;
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero-stats div {
+        padding: 13px 10px;
+      }
+
+      .hero-stats strong {
+        font-size: 1.25rem;
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card {
+        min-height: 250px;
+      }
+
+      .section-heading {
+        grid-template-columns: 38px minmax(0, 1fr);
+      }
+
+      .toolbar-inner {
+        display: grid;
+      }
+
+      .search-box {
+        max-width: none;
+      }
+
+      .footer-inner {
+        display: grid;
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .project-card:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="page-wrap header-inner">
+      <a class="brand" href="#top">CSS Development Lab</a>
+      <nav class="part-nav" aria-label="章节导航">
+        <a href="#part-1">Part 1 · 页面布局</a><a href="#part-2">Part 2 · 内容组件</a><a href="#part-3">Part 3 · 交互组件</a><a href="#part-4">Part 4 · 滚动与视觉</a><a href="#part-5">Part 5 · 现代 CSS</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="page-wrap hero-grid">
+        <div>
+          <p class="eyebrow">CSS DEVELOPMENT LAB · V1.0.0</p>
+          <h1>20 个 CSS 独立实战实验</h1>
+        </div>
+        <div class="hero-side">
+          <p class="hero-desc">
+            从真实 Web 开发场景出发，系统学习页面布局、内容组件、交互组件、
+            滚动视觉与现代 CSS。点击任意项目，将在新标签页打开独立实验。
+          </p>
+          <div class="hero-stats">
+            <div><strong>20</strong><span>独立实验</span></div>
+            <div><strong>5</strong><span>知识模块</span></div>
+            <div><strong>0</strong><span>构建依赖</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="page-wrap toolbar-inner">
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <input class="search-input" type="search" placeholder="搜索实验，例如：Grid、Tabs、Dark Mode…" data-search>
+        </label>
+        <span class="search-result" data-result>当前显示 20 个实验</span>
+      </div>
+    </section>
+
+    <div class="projects">
+      <div class="page-wrap">
+        
+      <section class="project-section" id="part-1">
+        <div class="section-heading">
+          <span class="section-index">01</span>
+          <div>
+            <p>CSS DEVELOPMENT LAB</p>
+            <h2>Part 1 · 页面布局</h2>
+          </div>
+        </div>
+        <div class="project-grid">
+          
+          <a class="project-card" href="./01-responsive-navigation/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">01</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Responsive Navigation</p>
+              <h3>响应式导航</h3>
+              <p class="project-desc">多级菜单、移动端 Drawer、响应式导航结构</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./02-responsive-hero/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">02</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Responsive Hero</p>
+              <h3>响应式 Hero</h3>
+              <p class="project-desc">Grid 两栏、clamp、图片与文字自适应</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./03-responsive-card-grid/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">03</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Responsive Card Grid</p>
+              <h3>响应式卡片网格</h3>
+              <p class="project-desc">auto-fit、minmax、1fr 与自动列布局</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./04-alternating-content-sections/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">04</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Alternating Content Sections</p>
+              <h3>交错图文布局</h3>
+              <p class="project-desc">Grid、nth-child 与桌面/移动端视觉顺序</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+        </div>
+      </section>
+    
+      <section class="project-section" id="part-2">
+        <div class="section-heading">
+          <span class="section-index">02</span>
+          <div>
+            <p>CSS DEVELOPMENT LAB</p>
+            <h2>Part 2 · 内容组件</h2>
+          </div>
+        </div>
+        <div class="project-grid">
+          
+          <a class="project-card" href="./05-equal-height-product-cards/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">05</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Equal Height Product Cards</p>
+              <h3>等高产品卡片</h3>
+              <p class="project-desc">Grid + Flex、等高布局、按钮底部对齐</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./06-responsive-images-object-fit/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">06</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Responsive Images / object-fit</p>
+              <h3>响应式图片</h3>
+              <p class="project-desc">aspect-ratio、cover、contain、object-position</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./07-text-overflow-long-content/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">07</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Text Overflow / Long Content</p>
+              <h3>文本溢出与长内容</h3>
+              <p class="project-desc">ellipsis、line-clamp、长 URL 与 min-width:0</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./08-responsive-table/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">08</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Responsive Table</p>
+              <h3>响应式表格</h3>
+              <p class="project-desc">横向滚动、Sticky Header 与首列固定</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+        </div>
+      </section>
+    
+      <section class="project-section" id="part-3">
+        <div class="section-heading">
+          <span class="section-index">03</span>
+          <div>
+            <p>CSS DEVELOPMENT LAB</p>
+            <h2>Part 3 · 交互组件</h2>
+          </div>
+        </div>
+        <div class="project-grid">
+          
+          <a class="project-card" href="./09-accordion/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">09</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Accordion</p>
+              <h3>手风琴</h3>
+              <p class="project-desc">CSS Grid 高度动画、单项展开与 ARIA</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./10-tabs/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">10</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Tabs</p>
+              <h3>选项卡</h3>
+              <p class="project-desc">Tabs 状态、键盘导航与移动端横向滚动</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./11-modal-lightbox/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">11</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Modal / Lightbox</p>
+              <h3>弹窗与灯箱</h3>
+              <p class="project-desc">dialog、Top Layer、backdrop 与内部滚动</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./12-drawer-offcanvas/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">12</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Drawer / Offcanvas</p>
+              <h3>侧滑抽屉</h3>
+              <p class="project-desc">fixed、translateX、遮罩与内部独立滚动</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+        </div>
+      </section>
+    
+      <section class="project-section" id="part-4">
+        <div class="section-heading">
+          <span class="section-index">04</span>
+          <div>
+            <p>CSS DEVELOPMENT LAB</p>
+            <h2>Part 4 · 滚动与视觉</h2>
+          </div>
+        </div>
+        <div class="project-grid">
+          
+          <a class="project-card" href="./13-sticky-layout/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">13</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Sticky Layout</p>
+              <h3>Sticky 布局</h3>
+              <p class="project-desc">Sticky Header、Sidebar、滚动容器与失效排查</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./14-scroll-snap/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">14</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">CSS Scroll Snap</p>
+              <h3>横向吸附滚动</h3>
+              <p class="project-desc">Scroll Snap、移动端横向卡片与 Gallery</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./15-hover-image-cards/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">15</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Hover Image Cards</p>
+              <h3>Hover 图片卡片</h3>
+              <p class="project-desc">Overlay、scale、Focus 与触控设备兼容</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./16-tooltip-dropdown-positioning/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">16</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Tooltip / Dropdown</p>
+              <h3>浮层与下拉定位</h3>
+              <p class="project-desc">relative/absolute、层级与 Anchor Positioning</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+        </div>
+      </section>
+    
+      <section class="project-section" id="part-5">
+        <div class="section-heading">
+          <span class="section-index">05</span>
+          <div>
+            <p>CSS DEVELOPMENT LAB</p>
+            <h2>Part 5 · 现代 CSS</h2>
+          </div>
+        </div>
+        <div class="project-grid">
+          
+          <a class="project-card" href="./17-container-queries/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">17</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Container Queries</p>
+              <h3>容器查询</h3>
+              <p class="project-desc">container-type、@container 与组件级响应式</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./18-fluid-responsive-design/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">18</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Fluid Responsive Design</p>
+              <h3>流体响应式</h3>
+              <p class="project-desc">clamp、min、max 与连续尺度系统</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./19-cascade-layer/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">19</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Cascade & @layer</p>
+              <h3>层叠与分层管理</h3>
+              <p class="project-desc">Specificity、Cascade、@layer 与 CSS 架构</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+          <a class="project-card" href="./20-dark-mode-design-tokens/index.html" target="_blank" rel="noopener">
+            <div class="card-top">
+              <span class="project-number">20</span>
+              <span class="open-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 16 16 8M10 8h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="project-en">Dark Mode & Design Tokens</p>
+              <h3>深色模式与设计令牌</h3>
+              <p class="project-desc">CSS Variables、Design Tokens 与主题切换</p>
+            </div>
+            <div class="card-foot">
+              <span>打开实验</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        
+        </div>
+      </section>
+    
+        <div class="empty-state" data-empty>
+          没有找到匹配的实验，请尝试其他关键词。
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="page-wrap footer-inner">
+      <span>CSS Development Lab · v1.0.0</span>
+      <span>HTML + CSS + Vanilla JavaScript</span>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const input = document.querySelector("[data-search]");
+      const cards = [...document.querySelectorAll(".project-card")];
+      const sections = [...document.querySelectorAll(".project-section")];
+      const result = document.querySelector("[data-result]");
+      const empty = document.querySelector("[data-empty]");
+
+      if (!input) return;
+
+      function normalize(value) {
+        return value.trim().toLowerCase();
+      }
+
+      function filterProjects() {
+        const keyword = normalize(input.value);
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const matched = !keyword || normalize(card.textContent).includes(keyword);
+          card.hidden = !matched;
+          if (matched) visibleCount += 1;
+        });
+
+        sections.forEach((section) => {
+          const hasVisibleCard = [...section.querySelectorAll(".project-card")]
+            .some((card) => !card.hidden);
+          section.classList.toggle("is-empty", !hasVisibleCard);
+        });
+
+        result.textContent = `当前显示 ${visibleCount} 个实验`;
+        empty.classList.toggle("is-visible", visibleCount === 0);
+      }
+
+      input.addEventListener("input", filterProjects);
+    })();
+  </script>
+</body>
+</html>

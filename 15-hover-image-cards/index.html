@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CSS Development Lab 15：Hover 图片卡片效果实验。">
+  <title>15 · Hover 图片卡片效果</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <div class="page-wrap intro-inner">
+        <p class="eyebrow">CSS DEVELOPMENT LAB · 15</p>
+        <h1>Hover 图片卡片效果</h1>
+        <p class="intro-desc">
+          产品、案例、Gallery、Portfolio 中最常见的视觉交互之一：
+          图片轻微放大、遮罩渐入、标题和操作按钮出现。
+          本实验同时处理键盘焦点和触控设备，避免把 Hover 当成唯一交互入口。
+        </p>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CORE DEMO</p>
+            <h2>一张卡片，四层职责</h2>
+          </div>
+          <p>
+            图片负责内容，伪元素负责遮罩，信息层负责标题和操作，
+            外层卡片负责裁切与 Hover / Focus 状态。
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="image-card">
+            <a class="card-link" href="#project-1" aria-label="查看滨水景观项目">
+              <img class="card-image" src="images/project-01.svg" alt="滨水景观项目占位图">
+              <div class="card-content">
+                <p class="card-meta">LANDSCAPE</p>
+                <h3>滨水景观项目</h3>
+                <span class="card-action">查看项目 <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+          </article>
+
+          <article class="image-card">
+            <a class="card-link" href="#project-2" aria-label="查看商业露台项目">
+              <img class="card-image" src="images/project-02.svg" alt="商业露台项目占位图">
+              <div class="card-content">
+                <p class="card-meta">COMMERCIAL</p>
+                <h3>商业露台项目</h3>
+                <span class="card-action">查看项目 <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+          </article>
+
+          <article class="image-card">
+            <a class="card-link" href="#project-3" aria-label="查看住宅庭院项目">
+              <img class="card-image" src="images/project-03.svg" alt="住宅庭院项目占位图">
+              <div class="card-content">
+                <p class="card-meta">RESIDENTIAL</p>
+                <h3>住宅庭院项目</h3>
+                <span class="card-action">查看项目 <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+          </article>
+
+          <article class="image-card">
+            <a class="card-link" href="#project-4" aria-label="查看建筑立面项目">
+              <img class="card-image" src="images/project-04.svg" alt="建筑立面项目占位图">
+              <div class="card-content">
+                <p class="card-meta">CLADDING</p>
+                <h3>建筑立面项目</h3>
+                <span class="card-action">查看项目 <b aria-hidden="true">→</b></span>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="layers">
+      <div class="page-wrap layers-grid">
+        <div>
+          <p class="eyebrow">LAYER MODEL</p>
+          <h2>Hover 效果本质是图层变化</h2>
+          <p>
+            不需要 JavaScript。把卡片拆成“图片、遮罩、内容”三个视觉层，
+            再通过父级状态统一控制即可。
+          </p>
+        </div>
+
+        <div class="layer-stack" aria-label="卡片图层结构示意">
+          <div class="layer layer-content"><span>03</span><strong>Content</strong></div>
+          <div class="layer layer-overlay"><span>02</span><strong>Overlay</strong></div>
+          <div class="layer layer-image"><span>01</span><strong>Image</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare">
+      <div class="page-wrap compare-grid">
+        <div class="compare-copy">
+          <p class="eyebrow">DESKTOP VS TOUCH</p>
+          <h2>不要让 Hover 成为唯一入口</h2>
+          <p>
+            鼠标设备可以隐藏部分信息，Hover 时再显示；触控设备没有稳定 Hover，
+            因此手机端应该默认让标题与操作保持可见。
+          </p>
+        </div>
+
+        <div class="decision-list">
+          <div>
+            <strong>鼠标设备</strong>
+            <span>Hover / Focus 时增强视觉效果</span>
+          </div>
+          <div>
+            <strong>触控设备</strong>
+            <span>信息默认可见，不依赖 Hover 才能操作</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tips-section">
+      <div class="page-wrap">
+        <div class="tips-head">
+          <p class="eyebrow">PRACTICAL RULES</p>
+          <h2>四个实用原则</h2>
+        </div>
+
+        <div class="tips-grid">
+          <article>
+            <span>01</span>
+            <h3>外层裁切</h3>
+            <p><code>overflow: hidden</code> 防止缩放后的图片跑出圆角容器。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>图片轻缩放</h3>
+            <p>建议控制在 1.03～1.08，避免 Hover 时视觉过于跳动。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>遮罩用伪元素</h3>
+            <p>不增加额外 HTML 节点，结构更干净。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Focus 同步</h3>
+            <p>键盘聚焦时也应该看到与 Hover 相近的视觉反馈。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

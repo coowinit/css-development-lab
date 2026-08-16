@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">产品卡片占位图 3</title>
+  <desc id="desc">用于等高产品卡片实验的无文字抽象 SVG</desc>
+  <rect width="800" height="600" fill="#d9d3cf"/>
+  <rect x="115" y="100" width="610" height="390" rx="38" fill="#f0ece8"/>
+  <rect x="180" y="189" width="470" height="330" rx="30" fill="#b6aaa2"/>
+  <circle cx="560" cy="190" r="75" fill="#f0ece8"/>
+  <path d="M55 520 L260 315 L405 445 L570 270 L750 520 Z" fill="#b6aaa2" opacity=".7"/>
+</svg>
