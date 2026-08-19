@@ -5,7 +5,7 @@ CSS Development Lab 的第 06 个独立实验。
 本实验专门研究网站开发中最常见的图片显示问题：
 
 - 产品图为什么被裁切？
-- Logo 为什么不能使用 `cover`？
+- Logo 为什么通常不适合使用 `cover`？
 - Banner 如何控制保留左边还是右边？
 - 人物头像如何保持圆形？
 - 不同尺寸图片怎样统一显示比例？
@@ -23,6 +23,7 @@ CSS Development Lab 的第 06 个独立实验。
 - 图片容器与图片本身的职责区别
 - `cover` 与 `contain` 的真实应用场景
 - 产品图、Logo、头像、Banner 的不同处理方式
+- 统一白色图片演示背景，直观看出 `cover`、`contain`、圆形裁切与 `object-position` 的差异
 
 ## 文件结构
 
@@ -32,10 +33,10 @@ CSS Development Lab 的第 06 个独立实验。
 ├── css/
 │   └── style.css
 ├── images/
-│   ├── product-scene.svg
-│   ├── logo-mark.svg
-│   ├── portrait.svg
-│   └── banner-scene.svg
+│   ├── product-scene.jpg
+│   ├── logo-mark.jpg
+│   ├── portrait.jpg
+│   └── banner-scene.jpg
 └── README.md
 ```
 
@@ -81,7 +82,7 @@ img {
 
 `cover` 的目标是：
 
-> 让图片完整填满容器。
+> 让图片覆盖整个容器，不留下空白区域。
 
 代价是：
 
@@ -200,7 +201,7 @@ object-position: right;
 object-position: bottom;
 ```
 
-它不会改变图片尺寸，只改变裁切时的视觉焦点。
+`object-position` 控制图片内容在容器中的对齐位置；在 `cover` 场景下，常用来决定裁切时优先保留哪个视觉区域。
 
 ---
 
@@ -226,7 +227,7 @@ Banner 通常比例很宽：
 object-fit: cover;
 ```
 
-后必然发生裁切。
+当源图片比例与容器比例不一致时，通常会发生裁切。
 
 此时如果主体不在图片中心，就应该调整：
 
