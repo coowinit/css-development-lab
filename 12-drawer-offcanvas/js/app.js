@@ -7,8 +7,9 @@
   const body = document.querySelector("[data-drawer-body]");
   const foot = document.querySelector("[data-drawer-foot]");
   const openButtons = document.querySelectorAll("[data-drawer-open]");
+  const pageContent = document.querySelector("[data-page-content]");
 
-  if (!drawer || !backdrop || !closeButton || !body || !foot) return;
+  if (!drawer || !backdrop || !closeButton || !body || !foot || !pageContent) return;
 
   const configs = {
     nav: {
@@ -52,6 +53,8 @@
     if (!renderContent(type)) return;
 
     lastTrigger = trigger;
+    drawer.inert = false;
+    pageContent.inert = true;
     document.body.classList.add("drawer-open");
     drawer.classList.add("is-open");
     drawer.setAttribute("aria-hidden", "false");
@@ -59,9 +62,8 @@
     backdrop.hidden = false;
     requestAnimationFrame(() => {
       backdrop.classList.add("is-visible");
+      closeButton.focus();
     });
-
-    closeButton.focus();
   }
 
   function closeDrawer({ restoreFocus = true } = {}) {
@@ -71,6 +73,7 @@
     drawer.classList.remove("is-open");
     drawer.setAttribute("aria-hidden", "true");
     backdrop.classList.remove("is-visible");
+    pageContent.inert = false;
 
     window.setTimeout(() => {
       backdrop.hidden = true;
@@ -79,6 +82,8 @@
     if (restoreFocus && lastTrigger) {
       lastTrigger.focus();
     }
+
+    drawer.inert = true;
   }
 
   openButtons.forEach((button) => {

@@ -405,7 +405,9 @@ Anchor Positioning
 本实验使用：
 
 ```css
-@supports (anchor-name: --demo-anchor) {
+@supports
+  (anchor-name: --demo-anchor) and
+  (position-anchor: --demo-anchor) {
 }
 ```
 

@@ -268,12 +268,13 @@ img {
   visibility: hidden;
   transition:
     transform 300ms cubic-bezier(.2, .8, .2, 1),
-    visibility 300ms;
+    visibility 0s linear 300ms;
 }
 
 .mobile-drawer.is-open {
   transform: translateX(0);
   visibility: visible;
+  transition-delay: 0s, 0s;
 }
 
 .drawer-head {

@@ -29,7 +29,7 @@
           </div>
           <p>
             当组件样式、页面样式、工具类互相覆盖时，很多项目会不断增加选择器权重，
-            最后出现 `.page .section .card .button` 甚至大量 `!important`。
+            最后出现 <code>.page .section .card .button</code> 甚至大量 <code>!important</code>。
           </p>
         </div>
 
@@ -106,7 +106,7 @@
             <h2>组件样式 + 工具类</h2>
           </div>
           <p>
-            三个按钮都使用同一个 `.button` 组件。工具类放在 utilities Layer，
+            三个按钮都使用同一个 <code>.button</code> 组件。工具类放在 utilities Layer，
             可以用简单类名覆盖组件的一部分，而不需要写更长的选择器。
           </p>
         </div>
@@ -143,7 +143,7 @@
           <p class="eyebrow">SPECIFICITY</p>
           <h2>Layer 不能替代对权重的理解</h2>
           <p>
-            `@layer` 可以管理“不同来源模块之间”的优先级，但同一个 Layer 内部，
+            <code>@layer</code> 可以管理“不同来源模块之间”的优先级，但同一个 Layer 内部，
             仍然要遵守 Specificity 和源码顺序。
           </p>
         </div>

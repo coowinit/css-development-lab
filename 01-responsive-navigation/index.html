@@ -60,7 +60,7 @@
 
   <div class="drawer-backdrop" data-backdrop hidden></div>
 
-  <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" data-drawer>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-hidden="true" inert data-drawer>
     <div class="drawer-head">
       <a class="brand" href="#home">
         <span class="brand-mark" aria-hidden="true">C</span>
@@ -80,11 +80,11 @@
           <div class="mobile-row">
             <a href="#products">产品</a>
             <button class="submenu-toggle" type="button" aria-label="展开产品子菜单"
-                    aria-expanded="false">
+                    aria-expanded="false" aria-controls="mobile-products-submenu">
               <img src="images/chevron-down.svg" alt="" aria-hidden="true">
             </button>
           </div>
-          <div class="mobile-submenu">
+          <div class="mobile-submenu" id="mobile-products-submenu" aria-hidden="true" inert>
             <ul class="mobile-submenu-list">
               <li><a href="#decking">户外地板</a></li>
               <li><a href="#cladding">墙板系统</a></li>
@@ -97,11 +97,11 @@
           <div class="mobile-row">
             <a href="#solutions">解决方案</a>
             <button class="submenu-toggle" type="button" aria-label="展开解决方案子菜单"
-                    aria-expanded="false">
+                    aria-expanded="false" aria-controls="mobile-solutions-submenu">
               <img src="images/chevron-down.svg" alt="" aria-hidden="true">
             </button>
           </div>
-          <div class="mobile-submenu">
+          <div class="mobile-submenu" id="mobile-solutions-submenu" aria-hidden="true" inert>
             <ul class="mobile-submenu-list">
               <li><a href="#residential">住宅项目</a></li>
               <li><a href="#commercial">商业项目</a></li>

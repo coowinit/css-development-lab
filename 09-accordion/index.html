@@ -38,7 +38,7 @@
             </div>
             <div>
               <strong>JavaScript</strong>
-              <span>只负责切换 `.is-open` 与 ARIA 状态</span>
+              <span>只负责切换 <code>.is-open</code> 与 ARIA 状态</span>
             </div>
           </div>
         </div>
@@ -49,6 +49,7 @@
               <button class="accordion-trigger"
                       type="button"
                       aria-expanded="true"
+                      aria-disabled="true"
                       aria-controls="panel-1"
                       id="trigger-1">
                 <span class="trigger-index">01</span>
@@ -62,12 +63,13 @@
             <div class="accordion-panel"
                  id="panel-1"
                  role="region"
+                 aria-hidden="false"
                  aria-labelledby="trigger-1">
               <div class="accordion-panel-inner">
                 <p>
-                  固定 `max-height: 500px` 虽然简单，但内容变化后可能不够高，
+                  固定 <code>max-height: 500px</code> 虽然简单，但内容变化后可能不够高，
                   或者动画时间与真实内容高度不匹配。本实验使用 Grid 的
-                  `grid-template-rows: 0fr → 1fr` 来完成展开。
+                  <code>grid-template-rows: 0fr → 1fr</code> 来完成展开。
                 </p>
               </div>
             </div>
@@ -78,6 +80,7 @@
               <button class="accordion-trigger"
                       type="button"
                       aria-expanded="false"
+                      aria-disabled="false"
                       aria-controls="panel-2"
                       id="trigger-2">
                 <span class="trigger-index">02</span>
@@ -91,10 +94,12 @@
             <div class="accordion-panel"
                  id="panel-2"
                  role="region"
+                 aria-hidden="true"
+                 inert
                  aria-labelledby="trigger-2">
               <div class="accordion-panel-inner">
                 <p>
-                  如果 JavaScript 每次都读取 `scrollHeight` 再写入像素高度，
+                  如果 JavaScript 每次都读取 <code>scrollHeight</code> 再写入像素高度，
                   逻辑会更复杂，也会让布局和交互耦合。本实验只让 JS 管状态，
                   CSS 自己处理视觉展开。
                 </p>
@@ -107,6 +112,7 @@
               <button class="accordion-trigger"
                       type="button"
                       aria-expanded="false"
+                      aria-disabled="false"
                       aria-controls="panel-3"
                       id="trigger-3">
                 <span class="trigger-index">03</span>
@@ -120,6 +126,8 @@
             <div class="accordion-panel"
                  id="panel-3"
                  role="region"
+                 aria-hidden="true"
+                 inert
                  aria-labelledby="trigger-3">
               <div class="accordion-panel-inner">
                 <p>
@@ -135,6 +143,7 @@
               <button class="accordion-trigger"
                       type="button"
                       aria-expanded="false"
+                      aria-disabled="false"
                       aria-controls="panel-4"
                       id="trigger-4">
                 <span class="trigger-index">04</span>
@@ -148,11 +157,13 @@
             <div class="accordion-panel"
                  id="panel-4"
                  role="region"
+                 aria-hidden="true"
+                 inert
                  aria-labelledby="trigger-4">
               <div class="accordion-panel-inner">
                 <p>
-                  不需要。JavaScript 会自动寻找容器里的所有 `.accordion-trigger`。
-                  后期只要复制一组 HTML，并保证 `id` 与 `aria-controls` 对应即可。
+                  不需要。JavaScript 会自动寻找容器里的所有 <code>.accordion-trigger</code>。
+                  后期只要复制一组 HTML，并保证 <code>id</code> 与 <code>aria-controls</code> 对应即可。
                 </p>
               </div>
             </div>

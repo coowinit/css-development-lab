@@ -239,6 +239,18 @@ aria-expanded="true"
 
 JavaScript 切换状态时同步修改。
 
+本实验还同步 Panel 的 `aria-hidden` 与 `inert`：折叠内容不仅视觉高度变为 `0fr`，也不会继续进入键盘焦点与交互路径。
+
+例如关闭 Panel：
+
+```html
+<div class="accordion-panel" aria-hidden="true" inert>
+  ...
+</div>
+```
+
+打开后移除 `inert` 并改为 `aria-hidden="false"`。
+
 ---
 
 ## 8. aria-controls
@@ -302,6 +314,8 @@ down.svg
 默认显示一项可以避免整个区域看起来完全关闭。
 
 并且用户当前正在看的内容不会因为误点再次关闭。
+
+因为本实验规定“始终至少保留一项展开”，当前展开按钮还会同步 `aria-disabled="true"`；切换到其他项目后，原按钮恢复为 `aria-disabled="false"`。这里的 `aria-disabled` 只表达语义，真正阻止再次关闭仍由 JavaScript 状态逻辑负责。
 
 当然，真实项目如果希望允许全部折叠，只需要删除 JS 中：
 

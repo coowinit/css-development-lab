@@ -95,7 +95,7 @@ CSS Development Lab 的第 01 个独立实验。
 }
 ```
 
-JavaScript 只负责添加或删除 `.is-open`。
+JavaScript 只负责添加或删除 `.is-open`，并同步 `aria-hidden`、`aria-expanded` 与 `inert`。关闭状态下 Drawer 本身使用 `inert`，避免屏幕外的链接继续进入键盘焦点顺序。
 
 ### 4. 手机端二级菜单
 
@@ -114,6 +114,8 @@ JavaScript 只负责添加或删除 `.is-open`。
 
 这是一种非常适合折叠内容的现代 CSS 写法。
 
+视觉折叠之外，本实验还会在关闭的二级菜单上同步 `aria-hidden="true"` 与 `inert`，避免高度为 `0fr` 时隐藏链接仍可被键盘访问。
+
 ## JavaScript 的职责
 
 本实验刻意让 JavaScript 保持最小化。
@@ -126,6 +128,10 @@ JS 只处理：
 - ESC 关闭
 - 点击遮罩关闭
 - 手机端二级菜单状态切换
+- 同步 `aria-hidden` / `inert`
+- 关闭 Drawer 后恢复触发按钮焦点
+
+打开 Drawer 时，关闭按钮的 `focus()` 放在 Drawer 变为可见后的下一帧执行，避免元素仍处于 `visibility: hidden` 的同一帧时聚焦失败。
 
 布局、动画、定位、显示方式全部交给 CSS。
 
@@ -214,7 +220,7 @@ JavaScript
 因此本实验使用：
 
 ```html
-<div class="mobile-submenu">
+<div class="mobile-submenu" aria-hidden="true" inert>
   <ul class="mobile-submenu-list">
     <li>...</li>
   </ul>

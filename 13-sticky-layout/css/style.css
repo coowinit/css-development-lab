@@ -212,7 +212,7 @@ code {
   font-size: clamp(2rem, 4vw, 4rem);
 }
 
-.article p:not(.eyebrow) {
+.article section > p:not(.eyebrow) {
   margin: 22px 0 0;
   color: var(--muted);
   font-size: 1rem;
@@ -284,8 +284,8 @@ code {
 }
 
 .problem-grid p {
-  margin: 0 !important;
-  font-size: .9rem !important;
+  margin: 0;
+  font-size: .9rem;
 }
 
 .compare-box {

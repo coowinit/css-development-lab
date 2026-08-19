@@ -458,7 +458,18 @@ lastTrigger.focus();
 
 让键盘用户回到原来的操作位置。
 
+打开时则先让 Drawer 进入可见状态，再在下一帧聚焦关闭按钮，避免 `visibility: hidden` 刚切换时浏览器拒绝聚焦。
+
 这属于很实用的小细节。
+
+同时，本实验在 Drawer 打开时给主页面内容设置 `inert`，关闭后再恢复：
+
+```js
+pageContent.inert = true;  // 打开
+pageContent.inert = false; // 关闭
+```
+
+关闭状态下 Drawer 自身也使用 `inert`。这样被遮挡或已经移出视口的交互内容不会继续进入键盘焦点顺序，而不需要额外编写复杂的 Focus Trap。
 
 ---
 

@@ -227,7 +227,7 @@ pre {
 }
 
 .min-box {
-  min-height: max(44px, 4vw);
+  min-height: max(44px, 3vw);
   padding-inline: clamp(16px, 2vw, 22px);
   display: inline-flex;
   align-items: center;
@@ -261,7 +261,6 @@ pre {
 }
 
 .scale-item {
-  width: clamp(45%, 10vw + 42%, 100%);
   min-height: clamp(56px, 7vw, 90px);
   padding-inline: clamp(16px, 3vw, 28px);
   display: flex;
