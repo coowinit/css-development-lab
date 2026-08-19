@@ -67,7 +67,13 @@ scroll-snap-align
 .item {
   scroll-snap-align: start;
 }
+
+.item:last-child {
+  scroll-snap-align: end;
+}
 ```
+
+普通项目吸附到滚动容器起始位置，最后一个项目吸附到结束位置。
 
 结果：
 
@@ -139,7 +145,7 @@ mandatory
 
 ## 4. scroll-snap-align
 
-本实验：
+本实验普通项目使用：
 
 ```css
 .item {
@@ -147,9 +153,17 @@ mandatory
 }
 ```
 
-表示：
+表示普通项目的左侧与滚动容器起始位置对齐。
 
-> 每张卡片左侧与滚动容器起始位置对齐。
+最后一个项目单独使用：
+
+```css
+.item:last-child {
+  scroll-snap-align: end;
+}
+```
+
+原因是最后一个项目后方通常没有足够的滚动空间，如果仍强制使用 `start`，它可能无法真正移动到容器左侧。改为 `end` 后，末项会自然贴齐滚动容器结束位置。
 
 还可以：
 
@@ -174,7 +188,7 @@ scroll-snap-align: center;
 .track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 32%;
+  grid-auto-columns: minmax(300px, 50%);
 }
 ```
 
@@ -196,6 +210,8 @@ display: flex;
 
 这里用 Grid 是为了更直接控制每一列宽度。
 
+产品卡片桌面端使用约 `50%` 列宽，使一个视口大约展示两张卡片，并保留足够的横向滚动距离。相比原来的较窄卡片，这样更容易观察 Scroll Snap 的实际吸附过程。
+
 ---
 
 ## 6. 手机端露出下一张卡片
@@ -206,10 +222,10 @@ display: flex;
 grid-auto-columns: 84%;
 ```
 
-意味着每张卡片只占大约：
+意味着每张卡片占滚动容器宽度的大约：
 
 ```text
-84% viewport width
+84%
 ```
 
 结果：
@@ -221,6 +237,22 @@ grid-auto-columns: 84%;
 这是一种很实用的视觉提示：
 
 > 用户会自然意识到可以继续向右滑。
+
+本实验采用三级列宽：
+
+```text
+桌面：约 50%
+平板：约 58%
+手机：84%
+```
+
+图片画廊则保持更大的单项宽度：
+
+```text
+桌面：78%
+平板：86%
+手机：92%
+```
 
 ---
 
@@ -285,7 +317,26 @@ normal
 
 ---
 
-## 10. Scroll Snap 和 Swiper 的最大区别
+## 10. 桌面端如何操作
+
+CSS Scroll Snap 基于原生滚动。
+
+桌面端常见操作方式包括：
+
+- 触控板横向手势
+- 浏览器横向滚动条
+- 部分系统或浏览器中的 `Shift + 鼠标滚轮`
+- 触摸屏横向滑动
+
+需要注意：
+
+> 纯 CSS Scroll Snap 不会自动提供类似 Swiper 的“鼠标左键按住并拖拽卡片”交互。
+
+如果项目明确要求鼠标拖拽、箭头、分页器、自动播放等完整轮播体验，应使用 JavaScript 或 Swiper，而不是继续堆叠 CSS。
+
+---
+
+## 11. Scroll Snap 和 Swiper 的最大区别
 
 Scroll Snap 不是完整 Slider Library。
 
@@ -309,7 +360,7 @@ Scroll Snap 不是完整 Slider Library。
 
 ---
 
-## 11. 什么时候优先 Scroll Snap
+## 12. 什么时候优先 Scroll Snap
 
 如果需求只是：
 
@@ -340,7 +391,7 @@ CSS Scroll Snap
 
 ---
 
-## 12. 什么时候使用 Swiper
+## 13. 什么时候使用 Swiper
 
 如果需要：
 
@@ -360,7 +411,7 @@ CSS Scroll Snap
 
 ---
 
-## 13. Scroll Snap 与普通横向滚动
+## 14. Scroll Snap 与普通横向滚动
 
 普通：
 
@@ -388,7 +439,7 @@ scroll-snap-type
 
 ---
 
-## 14. 图片 Gallery
+## 15. 图片 Gallery
 
 本实验第二个 Demo：
 
@@ -402,6 +453,8 @@ scroll-snap-type
 
 仍然完全使用原生滚动。
 
+普通图片使用 `scroll-snap-align: start`，最后一张图片使用 `scroll-snap-align: end`，这样既保留前面项目的左侧吸附感，也避免末项因尾部空间不足而无法完成吸附。
+
 它特别适合：
 
 - 移动端案例图
@@ -411,7 +464,7 @@ scroll-snap-type
 
 ---
 
-## 15. 可访问性与原生滚动
+## 16. 可访问性与原生滚动
 
 Scroll Snap 的一个优势是：
 
@@ -419,7 +472,8 @@ Scroll Snap 的一个优势是：
 
 浏览器原生支持：
 
-- 鼠标滚轮 / 触控板
+- 触控板横向手势
+- 横向滚动条
 - 触屏滑动
 - 键盘滚动
 - 浏览器滚动惯性
@@ -428,7 +482,7 @@ Scroll Snap 的一个优势是：
 
 ---
 
-## 16. 不要隐藏滚动行为
+## 17. 不要隐藏滚动行为
 
 如果完全隐藏：
 
